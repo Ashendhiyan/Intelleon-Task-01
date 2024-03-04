@@ -1,54 +1,21 @@
 package lk.intelleon.springbootrestfulwebservices.javaFxController;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import org.springframework.stereotype.Component;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 @Component
-public class DashboardController implements Initializable {
+public class DashboardController {
+    public AnchorPane side_anchorpane;
+    public AnchorPane root;
+    public AnchorPane context;
 
-    @FXML
-    private HBox root;
-
-    @FXML
-    private AnchorPane side_anchorpane;
-
-    @FXML
-    private Button btn_suppliers;
-
-    @FXML
-    private Button btn_unit;
-
-    @FXML
-    private Button btn_category;
-
-    @FXML
-    private AnchorPane context;
-
-    @FXML
-    void categoryOnAction(ActionEvent event) {
-
+    public void btnSuppliersOnAction(ActionEvent actionEvent) {
     }
 
-    @FXML
-    void suppliersOnAction(ActionEvent event) {
-
+    public void btnUnitOnAction(ActionEvent actionEvent) {
     }
 
-    @FXML
-    void unitOnAction(ActionEvent event) {
-
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
+    public void btnCategoryOnAction(ActionEvent actionEvent) {
     }
 }
