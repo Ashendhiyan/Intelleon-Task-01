@@ -1,0 +1,57 @@
+.root{
+    -fx-background-color: #b2bec3;
+}
+
+.side_anchorpane{
+    -fx-background-color: #00b894;
+    -fx-border-color: black;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}
+
+.btn_suppliers{
+    -fx-background-color: #636e72;
+    -fx-border-color: black;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}
+
+.btn_save{
+    -fx-background-color:#00b894;
+    -fx-border-color: black;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}
+
+.btn_update{
+    -fx-background-color:#0984e3;
+    -fx-border-color: black;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}
+
+.btn_delete{
+    -fx-background-color:#d63031;
+    -fx-border-color: black;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-border-style: solid;
+}
+
+.txtCode{
+    -fx-background-color:white;
+    -fx-border-color: black;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-style: solid;
+}

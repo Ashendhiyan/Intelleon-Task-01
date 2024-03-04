@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="unitPane" prefHeight="600.0" prefWidth="787.0" style="-fx-background-color: #b2bec3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.UnitController">
+   <children>
+      <Label layoutX="368.0" layoutY="13.0" prefHeight="48.0" prefWidth="90.0" text="Unit">
+         <font>
+            <Font name="Britannic Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="112.0" layoutY="101.0" prefHeight="36.0" prefWidth="97.0" text="Code :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="112.0" layoutY="158.0" prefHeight="36.0" prefWidth="97.0" text="Name :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="113.0" layoutY="219.0" prefHeight="36.0" prefWidth="97.0" text="Status :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtCode" layoutX="220.0" layoutY="107.0" prefHeight="25.0" prefWidth="182.0" stylesheets="@style/style.css">
+         <styleClass>
+            <String fx:value="btn_save" />
+            <String fx:value="txtCode" />
+         </styleClass>
+      </TextField>
+      <TextField fx:id="txtName" layoutX="220.0" layoutY="164.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <ComboBox fx:id="cmbStatus" layoutX="220.0" layoutY="226.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <Button fx:id="btn_save" layoutX="536.0" layoutY="115.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="36.0" prefWidth="97.0" stylesheets="@style/style.css" text="Save" textFill="#171717">
+         <styleClass>
+            <String fx:value="btn_suppliers" />
+            <String fx:value="btn_save" />
+         </styleClass>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_update" layoutX="536.0" layoutY="169.0" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="36.0" prefWidth="97.0" styleClass="btn_update" stylesheets="@style/style.css" text="Update">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_delete" layoutX="536.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="36.0" prefWidth="97.0" styleClass="btn_delete" stylesheets="@style/style.css" text="Delete">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblUnit" layoutX="62.0" layoutY="339.0" prefHeight="249.0" prefWidth="677.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="ID" />
+            <TableColumn prefWidth="216.33334350585938" text="Code " />
+            <TableColumn prefWidth="191.0" text="Name " />
+            <TableColumn prefWidth="195.0" text="Status " />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
