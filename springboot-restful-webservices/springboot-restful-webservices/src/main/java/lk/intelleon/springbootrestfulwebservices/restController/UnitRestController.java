@@ -1,8 +1,6 @@
 package lk.intelleon.springbootrestfulwebservices.restController;
 
-import lk.intelleon.springbootrestfulwebservices.dto.SupplierDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.UnitDTO;
-import lk.intelleon.springbootrestfulwebservices.service.SupplierService;
 import lk.intelleon.springbootrestfulwebservices.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/unit")
-public class UnitController {
+public class UnitRestController {
 
     @Autowired
     UnitService unitService;

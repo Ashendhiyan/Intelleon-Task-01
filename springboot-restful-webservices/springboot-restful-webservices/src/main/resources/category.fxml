@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="categoryPane" prefHeight="600.0" prefWidth="787.0" style="-fx-background-color: #b2bec3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.CategoryController">
    <children>
       <Label layoutX="321.0" layoutY="10.0" prefHeight="48.0" prefWidth="154.0" text="Category">
@@ -60,7 +59,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="tblCategory" layoutX="56.0" layoutY="336.0" prefHeight="249.0" prefWidth="677.0">
+      <TableView fx:id="tblCategory" layoutX="56.0" layoutY="336.0" onMouseClicked="#handleRowClick" prefHeight="249.0" prefWidth="677.0">
          <columns>
             <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
             <TableColumn fx:id="colCode" prefWidth="216.33334350585938" text="Code " />

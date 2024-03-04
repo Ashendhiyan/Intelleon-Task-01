@@ -12,17 +12,15 @@ import javafx.scene.layout.AnchorPane;
 import lk.intelleon.springbootrestfulwebservices.dto.SupplierDTO;
 import org.springframework.stereotype.Component;
 
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+
 @Component
 public class SuppliersController {
-
-
     private ObservableList<SupplierDTO> suppliersList = FXCollections.observableArrayList();
 
     @FXML
@@ -127,6 +125,13 @@ public class SuppliersController {
         }
     }
 
+    public void clearTextFields() {
+        txtCode.setText("");
+        txtName.setText("");
+        txtAddress.setText("");
+        cmbStatus.setValue("");
+    }
+
     @FXML
     void SaveOnAction(ActionEvent event) {
         try {
@@ -160,6 +165,7 @@ public class SuppliersController {
                 // Handle successful response
                 System.out.println("Supplier saved successfully!");
                 loadDataFromBackend();
+                clearTextFields();
             } else {
                 // Handle error response
                 System.out.println("Error saving supplier: " + responseCode);
@@ -205,6 +211,7 @@ public class SuppliersController {
                     System.out.println("Supplier updated successfully!");
                     // Refresh table data after update
                     loadDataFromBackend();
+                    clearTextFields();
                 } else {
                     // Handle error response
                     System.out.println("Error updating supplier: " + responseCode);
@@ -235,6 +242,7 @@ public class SuppliersController {
                     // Remove deleted supplier from the table
                     suppliersList.remove(selectedSupplier);
                     System.out.println("Supplier deleted successfully!");
+                    clearTextFields();
                 } else {
                     System.out.println("Error deleting supplier: " + responseCode);
                 }

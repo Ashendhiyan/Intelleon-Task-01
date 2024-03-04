@@ -25,7 +25,7 @@ public class SpringbootRestfulWebservicesApplication extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		applicationContext=SpringApplication.run(SpringbootRestfulWebservicesApplication.class);
-		FXMLLoader loader =  new FXMLLoader(SpringbootRestfulWebservicesApplication.class.getResource("/suppliers.fxml"));
+		FXMLLoader loader =  new FXMLLoader(SpringbootRestfulWebservicesApplication.class.getResource("/category.fxml"));
 		loader.setControllerFactory(applicationContext::getBean);
 		Scene scene = new Scene(loader.load(),1000,600,false, SceneAntialiasing.BALANCED);
 		stage.setTitle("CRUD operation using JAVAFX / SPRINGBOOT /MYSQL");

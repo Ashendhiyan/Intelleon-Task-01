@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="unitPane" prefHeight="600.0" prefWidth="787.0" style="-fx-background-color: #b2bec3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.UnitController">
    <children>
       <Label layoutX="368.0" layoutY="13.0" prefHeight="48.0" prefWidth="90.0" text="Unit">
@@ -60,12 +59,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="tblUnit" layoutX="62.0" layoutY="339.0" prefHeight="249.0" prefWidth="677.0">
+      <TableView fx:id="tblUnit" layoutX="62.0" layoutY="339.0" onMouseClicked="#handleRowClick" prefHeight="249.0" prefWidth="677.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="ID" />
-            <TableColumn prefWidth="216.33334350585938" text="Code " />
-            <TableColumn prefWidth="191.0" text="Name " />
-            <TableColumn prefWidth="195.0" text="Status " />
+            <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="colCode" prefWidth="216.33334350585938" text="Code " />
+            <TableColumn fx:id="colName" prefWidth="191.0" text="Name " />
+            <TableColumn fx:id="colstatus" prefWidth="195.0" text="Status " />
          </columns>
       </TableView>
    </children>

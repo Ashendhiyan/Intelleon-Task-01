@@ -1,9 +1,7 @@
 package lk.intelleon.springbootrestfulwebservices.restController;
 
 import lk.intelleon.springbootrestfulwebservices.dto.CategoryDTO;
-import lk.intelleon.springbootrestfulwebservices.dto.UnitDTO;
 import lk.intelleon.springbootrestfulwebservices.service.CategoryService;
-import lk.intelleon.springbootrestfulwebservices.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/category")
-public class CategoryController {
+public class CategoryRestController {
 
     @Autowired
     CategoryService categoryService;
