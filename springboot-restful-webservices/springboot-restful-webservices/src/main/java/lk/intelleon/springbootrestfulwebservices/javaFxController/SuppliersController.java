@@ -89,6 +89,7 @@ public class SuppliersController {
 
     private void loadDataFromBackend() {
         try {
+            suppliersList.clear();
             URL url = new URL("http://localhost:8080/api/v1/suppliers");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -125,19 +126,6 @@ public class SuppliersController {
             }
         }
     }
-//    @FXML
-//    void handleRowClick(MouseEvent event) {
-//        if (event.getClickCount() == 1) { // Check if single click
-//            SupplierDTO selectedSupplier = (SupplierDTO) tblSuppliers.getSelectionModel().getSelectedItem();
-//            if (selectedSupplier != null) {
-//                // Populate text fields with selected row data
-//                txtCode.setText(selectedSupplier.getSupplierCode());
-//                txtName.setText(selectedSupplier.getName());
-//                txtAddress.setText(selectedSupplier.getAddress());
-//                cmbStatus.setValue(selectedSupplier.getStatus());
-//            }
-//        }
-//    }
 
     @FXML
     void SaveOnAction(ActionEvent event) {
@@ -215,7 +203,6 @@ public class SuppliersController {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
                     System.out.println("Supplier updated successfully!");
-                    loadDataFromBackend();
                     // Refresh table data after update
                     loadDataFromBackend();
                 } else {
@@ -248,7 +235,6 @@ public class SuppliersController {
                     // Remove deleted supplier from the table
                     suppliersList.remove(selectedSupplier);
                     System.out.println("Supplier deleted successfully!");
-//                    loadDataFromBackend();
                 } else {
                     System.out.println("Error deleting supplier: " + responseCode);
                 }
