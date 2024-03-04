@@ -8,19 +8,19 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.DashboardController">
+<AnchorPane fx:id="root" prefHeight="601.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.DashboardController">
    <children>
-      <HBox layoutX="1.0" layoutY="1.0" prefHeight="600.0" prefWidth="1000.0">
+      <HBox layoutX="1.0" layoutY="1.0" prefHeight="600.0" prefWidth="1017.0">
          <children>
-            <VBox prefHeight="600.0" prefWidth="234.0">
+            <VBox prefHeight="600.0" prefWidth="232.0">
                <children>
-                  <AnchorPane fx:id="side_anchorpane" prefHeight="600.0" prefWidth="250.0" styleClass="side_anchorpane" stylesheets="@style/style.css" />
+                  <AnchorPane fx:id="side_anchorpane" prefHeight="600.0" prefWidth="191.0" styleClass="side_anchorpane" stylesheets="@style/style.css" />
                </children>
             </VBox>
             <AnchorPane fx:id="context" prefHeight="600.0" prefWidth="787.0" style="-fx-background-color: #b2bec3;" />
          </children>
       </HBox>
-      <Button layoutX="7.0" layoutY="88.0" mnemonicParsing="false" onAction="#btnSuppliersOnAction" prefHeight="46.0" prefWidth="211.0" styleClass="btn_suppliers" stylesheets="@style/style.css" text="Suppliers" textFill="WHITE">
+      <Button fx:id="Suppliers" layoutX="7.0" layoutY="88.0" mnemonicParsing="false" onAction="#btnSuppliersOnAction" prefHeight="46.0" prefWidth="211.0" styleClass="btn_suppliers" stylesheets="@style/style.css" text="Suppliers" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -28,7 +28,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="8.0" layoutY="158.0" mnemonicParsing="false" onAction="#btnUnitOnAction" prefHeight="46.0" prefWidth="211.0" styleClass="btn_suppliers" stylesheets="@style/style.css" text="Unit" textFill="#fffefe">
+      <Button fx:id="Unit" layoutX="8.0" layoutY="158.0" mnemonicParsing="false" onAction="#btnUnitOnAction" prefHeight="46.0" prefWidth="211.0" styleClass="btn_suppliers" stylesheets="@style/style.css" text="Unit" textFill="#fffefe">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -36,7 +36,15 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="8.0" layoutY="227.0" mnemonicParsing="false" onAction="#btnCategoryOnAction" prefHeight="46.0" prefWidth="211.0" styleClass="btn_suppliers" stylesheets="@style/style.css" text="Category" textFill="WHITE">
+      <Button fx:id="Category" layoutX="8.0" layoutY="227.0" mnemonicParsing="false" onAction="#btnCategoryOnAction" prefHeight="46.0" prefWidth="211.0" styleClass="btn_suppliers" stylesheets="@style/style.css" text="Category" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="Items" layoutX="10.0" layoutY="301.0" mnemonicParsing="false" onAction="#btnItemOnAction" prefHeight="46.0" prefWidth="211.0" styleClass="btn_suppliers" stylesheets="@style/style.css" text="Item" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

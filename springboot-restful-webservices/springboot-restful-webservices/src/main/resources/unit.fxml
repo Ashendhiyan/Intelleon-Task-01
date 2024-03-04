@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="unitPane" prefHeight="600.0" prefWidth="787.0" style="-fx-background-color: #b2bec3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.UnitController">
    <children>
-      <Label layoutX="368.0" layoutY="13.0" prefHeight="48.0" prefWidth="90.0" text="Unit">
+      <Label layoutX="306.0" layoutY="13.0" prefHeight="48.0" prefWidth="161.0" text="Unit Form">
          <font>
             <Font name="Britannic Bold" size="36.0" />
          </font>
