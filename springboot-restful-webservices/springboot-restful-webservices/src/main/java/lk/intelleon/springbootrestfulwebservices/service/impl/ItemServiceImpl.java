@@ -47,9 +47,11 @@ public class ItemServiceImpl implements ItemService {
         List<ItemEntity> all = repository.findAll();
         return convertor.ItemEntityListToItemDTOList(all);
 
-    /*    List<ItemEntity> itemEntities = repository.findAll();
-        return itemEntities.stream()
-                .map(convertor::ItemEntityToItemDto)
-                .collect(Collectors.toList());*/
     }
+
+    @Override
+    public ItemEntity getItemById(Long itemId) {
+        return repository.findById(itemId).orElse(null);
+    }
+
 }

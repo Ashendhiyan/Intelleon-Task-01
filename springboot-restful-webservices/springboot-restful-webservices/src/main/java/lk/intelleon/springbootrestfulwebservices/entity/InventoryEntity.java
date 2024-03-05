@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -19,7 +20,7 @@ public class InventoryEntity {
     @ManyToOne
     @JoinColumn(name = "item_id")
     private ItemEntity item;
-    private Date receivedDate;
+    private LocalDate receivedDate;
     private int receivedQty;
     private String approvalStatus;
     private String status;

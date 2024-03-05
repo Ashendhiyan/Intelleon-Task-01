@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -12,7 +13,7 @@ import java.util.Date;
 public class InventoryDTO {
     private Long id;
     private Long itemId;
-    private Date receivedDate;
+    private LocalDate receivedDate;
     private int receivedQty;
     private String approvalStatus;
     private String status;

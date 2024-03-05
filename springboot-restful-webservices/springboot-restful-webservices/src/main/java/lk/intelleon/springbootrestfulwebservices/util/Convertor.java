@@ -1,13 +1,7 @@
 package lk.intelleon.springbootrestfulwebservices.util;
 
-import lk.intelleon.springbootrestfulwebservices.dto.CategoryDTO;
-import lk.intelleon.springbootrestfulwebservices.dto.ItemDTO;
-import lk.intelleon.springbootrestfulwebservices.dto.SupplierDTO;
-import lk.intelleon.springbootrestfulwebservices.dto.UnitDTO;
-import lk.intelleon.springbootrestfulwebservices.entity.CategoryEntity;
-import lk.intelleon.springbootrestfulwebservices.entity.ItemEntity;
-import lk.intelleon.springbootrestfulwebservices.entity.SupplierEntity;
-import lk.intelleon.springbootrestfulwebservices.entity.UnitEntity;
+import lk.intelleon.springbootrestfulwebservices.dto.*;
+import lk.intelleon.springbootrestfulwebservices.entity.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +58,16 @@ public class Convertor {
     }
     public List<ItemDTO> ItemEntityListToItemDTOList(List<ItemEntity> items){
         return modelMapper.map(items,new TypeToken<List<ItemDTO>>(){}.getType());
+    }
+
+    //Inventory
+    public InventoryEntity InventoryDtoToInventoryEntity(InventoryDTO inventoryDTO) {
+        return modelMapper.map(inventoryDTO, InventoryEntity.class);
+    }
+    public InventoryDTO InventoryEntityToInventoryDto(InventoryEntity inventoryEntity) {
+        return modelMapper.map(inventoryEntity,InventoryDTO.class);
+    }
+    public List<InventoryDTO> InventoryEntityListToInventoryDTOList(List<InventoryEntity> inventoryEntityList){
+        return modelMapper.map(inventoryEntityList,new TypeToken<List<InventoryDTO>>(){}.getType());
     }
 }
