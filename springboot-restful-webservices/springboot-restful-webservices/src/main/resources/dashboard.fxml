@@ -52,5 +52,13 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
+      <Button fx:id="Inventory" layoutX="9.0" layoutY="376.0" mnemonicParsing="false" onAction="#btnInventoryOnAction" prefHeight="46.0" prefWidth="211.0" styleClass="btn_suppliers" stylesheets="@style/style.css" text="Inventory" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

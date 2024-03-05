@@ -61,6 +61,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version> <!-- or any compatible version -->
         </dependency>
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>

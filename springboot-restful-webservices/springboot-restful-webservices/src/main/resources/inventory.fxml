@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="787.0" style="-fx-background-color: #b2bec3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.InventoryController">
+   <children>
+      <Label layoutX="271.0" layoutY="14.0" prefHeight="48.0" prefWidth="246.0" text="Inventory Form">
+         <font>
+            <Font name="Britannic Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="114.0" layoutY="102.0" prefHeight="36.0" prefWidth="97.0" text="Item :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="114.0" layoutY="148.0" prefHeight="36.0" prefWidth="97.0" text="Received_date :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="114.0" layoutY="193.0" prefHeight="36.0" prefWidth="97.0" text="Received_qty :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="116.0" layoutY="281.0" prefHeight="36.0" prefWidth="97.0" text="Status :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtReceived_qty" layoutX="223.0" layoutY="198.0" prefHeight="25.0" prefWidth="182.0" stylesheets="@style/style.css">
+         <styleClass>
+            <String fx:value="btn_save" />
+            <String fx:value="txtCode" />
+         </styleClass>
+      </TextField>
+      <ComboBox fx:id="cmbStatus" layoutX="223.0" layoutY="288.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Button layoutX="538.0" layoutY="116.0" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="36.0" prefWidth="97.0" stylesheets="@style/style.css" text="Save">
+         <styleClass>
+            <String fx:value="btn_suppliers" />
+            <String fx:value="btn_save" />
+         </styleClass>
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="538.0" layoutY="170.0" mnemonicParsing="false" onAction="#UpdateOnAction" prefHeight="36.0" prefWidth="97.0" styleClass="btn_update" stylesheets="@style/style.css" text="Update">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="538.0" layoutY="230.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="36.0" prefWidth="97.0" styleClass="btn_delete" stylesheets="@style/style.css" text="Delete">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TableView fx:id="tblInventory" layoutX="43.0" layoutY="340.0" onMouseClicked="#handleRowClick" prefHeight="249.0" prefWidth="706.0">
+         <columns>
+            <TableColumn fx:id="colId" prefWidth="81.33332824707031" text="ID" />
+            <TableColumn fx:id="colItem" prefWidth="103.66667175292969" text="Item" />
+            <TableColumn fx:id="collDate" prefWidth="113.33332824707031" text="Date" />
+            <TableColumn fx:id="colQty" prefWidth="128.3333282470703" text="Received_qty " />
+            <TableColumn fx:id="colApproval" prefWidth="132.0" text="Approval" />
+            <TableColumn fx:id="colStatus" prefWidth="147.66668701171875" text="Status " />
+         </columns>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </TableView>
+      <ComboBox fx:id="cmbItems" layoutX="222.0" layoutY="110.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <Label layoutX="115.0" layoutY="237.0" prefHeight="36.0" prefWidth="97.0" text="Approval :">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbApproval" layoutX="223.0" layoutY="242.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
+      <DatePicker fx:id="datePicker" layoutX="227.0" layoutY="154.0" />
+   </children>
+</AnchorPane>

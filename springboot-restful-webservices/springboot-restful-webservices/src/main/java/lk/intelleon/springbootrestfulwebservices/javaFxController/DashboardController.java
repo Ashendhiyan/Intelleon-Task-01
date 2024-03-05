@@ -24,6 +24,8 @@ public class DashboardController {
     public Button Unit;
     @FXML
     public Button Category;
+    public Button Inventory;
+    public Button Items;
 
     @FXML
     public void btnSuppliersOnAction(ActionEvent actionEvent) {
@@ -47,13 +49,13 @@ public class DashboardController {
         try {
             // Load the FXML file for the unit form
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/unit.fxml"));
-            Parent supplierForm = loader.load();
+            Parent unitForm = loader.load();
 
             // Access the controller for the unit form
             UnitController unitController = loader.getController();
 
             // Set the unit form as the content of the context AnchorPane
-            context.getChildren().setAll(supplierForm);
+            context.getChildren().setAll(unitForm);
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -64,13 +66,13 @@ public class DashboardController {
         try {
             // Load the FXML file for the category form
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/category.fxml"));
-            Parent supplierForm = loader.load();
+            Parent categoryForm = loader.load();
 
             // Access the controller for the category form
             CategoryController categoryController = loader.getController();
 
             // Set the category form as the content of the context AnchorPane
-            context.getChildren().setAll(supplierForm);
+            context.getChildren().setAll(categoryForm);
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -81,13 +83,30 @@ public class DashboardController {
         try {
             // Load the FXML file for the item form
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/item.fxml"));
-            Parent supplierForm = loader.load();
+            Parent itemForm = loader.load();
 
             // Access the controller for the item form
             ItemController itemController = loader.getController();
 
             // Set the item form as the content of the context AnchorPane
-            context.getChildren().setAll(supplierForm);
+            context.getChildren().setAll(itemForm);
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void btnInventoryOnAction(ActionEvent actionEvent) {
+        try {
+            // Load the FXML file for the Inventory form
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/inventory.fxml"));
+            Parent inventoryForm = loader.load();
+
+            // Access the controller for the Inventory form
+            InventoryController inventoryController = loader.getController();
+
+            // Set the Inventory form as the content of the context AnchorPane
+            context.getChildren().setAll(inventoryForm);
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
