@@ -7,9 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.intelleon.springbootrestfulwebservices.dto.SupplierDTO;
+import lk.intelleon.springbootrestfulwebservices.util.Service;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,47 +23,36 @@ import java.util.Arrays;
 
 @Component
 public class SuppliersController {
+    boolean isMatchSupplierCode = false;
+    boolean isMatchSupplierName = false;
+    boolean isMatchSupplierAddress = false;
     private ObservableList<SupplierDTO> suppliersList = FXCollections.observableArrayList();
-
     @FXML
     private AnchorPane supplierPane;
-
     @FXML
     private TextField txtCode;
-
     @FXML
     private TextField txtName;
-
     @FXML
     private TextField txtAddress;
-
     @FXML
     private ComboBox<String> cmbStatus;
-
     @FXML
     private Button btn_save;
-
     @FXML
     private Button btn_update;
-
     @FXML
     private Button btn_delete;
-
     @FXML
     private TableView<SupplierDTO> tblSuppliers;
-
     @FXML
     private TableColumn<SupplierDTO, String> colId;
-
     @FXML
     private TableColumn<SupplierDTO, String> colCode;
-
     @FXML
     private TableColumn<SupplierDTO, String> colName;
-
     @FXML
     private TableColumn<SupplierDTO, String> colAddress;
-
     @FXML
     private TableColumn<SupplierDTO, String> colStatus;
 
@@ -110,7 +101,6 @@ public class SuppliersController {
             e.printStackTrace();
         }
     }
-
 
     public void handleRowClick(MouseEvent event) {
         if (event.getClickCount() == 1) { // Check if single click
@@ -256,5 +246,33 @@ public class SuppliersController {
         }
     }
 
+    public void txtCodeOnAction(KeyEvent keyEvent) {
+        if (Service.isValidSupplierCode(txtCode.getText())) {
+            txtCode.setStyle("-fx-border-color: green");
+            isMatchSupplierCode = true;
+        } else {
+            txtCode.setStyle("-fx-border-color: red");
+            isMatchSupplierCode = true;
+        }
+    }
 
+    public void txtNameOnAction(KeyEvent keyEvent) {
+        if (Service.isValidName(txtName.getText())) {
+            txtName.setStyle("-fx-border-color: green");
+            isMatchSupplierName = true;
+        } else {
+            txtName.setStyle("-fx-border-color: red");
+            isMatchSupplierName = true;
+        }
+    }
+
+    public void txtAddressOnAction(KeyEvent keyEvent) {
+        if (Service.isValidName(txtName.getText())) {
+            txtName.setStyle("-fx-border-color: green");
+            isMatchSupplierAddress = true;
+        } else {
+            txtName.setStyle("-fx-border-color: red");
+            isMatchSupplierAddress = true;
+        }
+    }
 }

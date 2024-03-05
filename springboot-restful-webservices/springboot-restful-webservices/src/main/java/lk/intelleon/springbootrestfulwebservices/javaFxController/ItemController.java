@@ -7,14 +7,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.intelleon.springbootrestfulwebservices.dto.CategoryDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.ItemDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.UnitDTO;
+import lk.intelleon.springbootrestfulwebservices.util.Service;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
+
+import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -23,55 +26,64 @@ import java.net.URL;
 import java.util.Arrays;
 
 @Component
-@Service
 public class ItemController {
 
-    private ObservableList<ItemDTO> itemList = FXCollections.observableArrayList();
+    public TableColumn<ItemDTO, String> colCategoryid;
+    public TableColumn<ItemDTO, String> colUnitId;
+    boolean isMatchItemCode = false;
+    boolean isMatchItemName = false;
 
+    private ObservableList<ItemDTO> itemList = FXCollections.observableArrayList();
     @FXML
     private AnchorPane itemPane;
-
     @FXML
     private TextField txtCode;
-
     @FXML
     private TextField txtName;
-
     @FXML
     private ComboBox<String> cmbStatus;
-
     @FXML
     private Button btn_save;
-
     @FXML
     private Button btn_update;
-
     @FXML
     private Button btn_delete;
-
     @FXML
     private TableView<ItemDTO> tblItems;
-
     @FXML
     private TableColumn<ItemDTO, String> colId;
-
     @FXML
     private TableColumn<ItemDTO, String> colCode;
-
     @FXML
     private TableColumn<ItemDTO, String> colName;
-
-    public TableColumn<ItemDTO,String> colCategoryid;
-    public TableColumn<ItemDTO,String>  colUnitId;
-
     @FXML
     private TableColumn<ItemDTO, String> colStatus;
-
     @FXML
     private ComboBox<CategoryDTO> cmbCategory;
-
     @FXML
     private ComboBox<UnitDTO> cmbUnit;
+
+
+    //Validations
+    public void txtCodeOnAction(KeyEvent keyEvent) {
+        if (Service.isValidItemCode(txtCode.getText())) {
+            txtCode.setStyle("-fx-border-color: green");
+            isMatchItemCode = true;
+        } else {
+            txtCode.setStyle("-fx-border-color: red");
+            isMatchItemCode = true;
+        }
+    }
+
+    public void txtNameOnAction(KeyEvent keyEvent) {
+        if (Service.isValidName(txtName.getText())) {
+            txtName.setStyle("-fx-border-color: green");
+            isMatchItemName = true;
+        } else {
+            txtName.setStyle("-fx-border-color: red");
+            isMatchItemName = true;
+        }
+    }
 
     public void initialize() {
         loadCmbDataFromBackend();
@@ -152,49 +164,54 @@ public class ItemController {
         }
     }
 
-
     @FXML
     void SaveOnAction(ActionEvent event) {
-        try {
-            URL url = new URL("http://localhost:8080/api/v1/item");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setDoOutput(true);
+        if(!isMatchItemCode){
+        }else if(!isMatchItemName) {
+        }else {
+            try {
+                URL url = new URL("http://localhost:8080/api/v1/item");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
 
-            // Create ItemDTO object
-            ItemDTO itemDTO = new ItemDTO();
-            itemDTO.setCode(txtCode.getText());
-            itemDTO.setName(txtName.getText());
-            itemDTO.setCategoryId(cmbCategory.getValue().getId());
-            itemDTO.setUnitId(cmbUnit.getValue().getId());
-            itemDTO.setStatus(cmbStatus.getValue());
+                // Create ItemDTO object
+                ItemDTO itemDTO = new ItemDTO();
+                itemDTO.setCode(txtCode.getText());
+                itemDTO.setName(txtName.getText());
+                itemDTO.setCategoryId(cmbCategory.getValue().getId());
+                itemDTO.setUnitId(cmbUnit.getValue().getId());
+                itemDTO.setStatus(cmbStatus.getValue());
 
-            // Convert ItemDTO object to JSON
-            Gson gson = new Gson();
-            String jsonInputString = gson.toJson(itemDTO);
+                // Convert ItemDTO object to JSON
+                Gson gson = new Gson();
+                String jsonInputString = gson.toJson(itemDTO);
 
-            // Send JSON data
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length);
+                // Send JSON data
+                try (OutputStream os = conn.getOutputStream()) {
+                    byte[] input = jsonInputString.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+
+                // Get response code
+                int responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // Handle successful response
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Item saved successfully!");
+                    System.out.println("Item saved successfully!");
+                    loadDataFromBackend(); // Refresh data
+                    clearTextFields(); // Clear input fields
+                } else {
+                    // Handle error response
+                    System.out.println("Error saving item: " + responseCode);
+                }
+
+                conn.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            // Get response code
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Handle successful response
-                System.out.println("Item saved successfully!");
-                loadDataFromBackend(); // Refresh data
-                clearTextFields(); // Clear input fields
-            } else {
-                // Handle error response
-                System.out.println("Error saving item: " + responseCode);
-            }
-
-            conn.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

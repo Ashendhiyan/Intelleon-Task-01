@@ -7,9 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.intelleon.springbootrestfulwebservices.dto.UnitDTO;
+import lk.intelleon.springbootrestfulwebservices.util.Service;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -45,9 +47,9 @@ public class UnitController {
     public TableColumn<UnitDTO, String> colName;
     @FXML
     public TableColumn<UnitDTO, String> colstatus;
-
+    boolean isMatchUnitCode = false;
+    boolean isMatchUnitName = false;
     private ObservableList<UnitDTO> unitList = FXCollections.observableArrayList();
-
 
     public void initialize() {
         // Initialize the ComboBox with "Active" and "Inactive" values
@@ -94,7 +96,6 @@ public class UnitController {
         }
     }
 
-
     public void handleRowClick(MouseEvent event) {
         if (event.getClickCount() == 1) { // Check if single click
             UnitDTO selectedUnit = (UnitDTO) tblUnit.getSelectionModel().getSelectedItem();
@@ -107,7 +108,7 @@ public class UnitController {
         }
     }
 
-    public void clearTextFields(){
+    public void clearTextFields() {
         txtCode.setText("");
         txtName.setText("");
         cmbStatus.setValue("");
@@ -235,4 +236,23 @@ public class UnitController {
         }
     }
 
+    public void txtCodeOnAction(KeyEvent keyEvent) {
+        if (Service.isValidUnitCode(txtCode.getText())) {
+            txtCode.setStyle("-fx-border-color: green");
+            isMatchUnitCode = true;
+        } else {
+            txtCode.setStyle("-fx-border-color: red");
+            isMatchUnitCode = true;
+        }
+    }
+
+    public void txtNameOnAction(KeyEvent keyEvent) {
+        if (Service.isValidName(txtName.getText())) {
+            txtName.setStyle("-fx-border-color: green");
+            isMatchUnitName = true;
+        } else {
+            txtName.setStyle("-fx-border-color: red");
+            isMatchUnitName = true;
+        }
+    }
 }

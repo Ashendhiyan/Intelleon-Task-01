@@ -32,13 +32,13 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtCode" layoutX="214.0" layoutY="104.0" prefHeight="25.0" prefWidth="182.0" stylesheets="@style/style.css">
+      <TextField fx:id="txtCode" layoutX="214.0" layoutY="104.0" onKeyReleased="#txtCodeOnActiion" prefHeight="25.0" prefWidth="182.0" stylesheets="@style/style.css">
          <styleClass>
             <String fx:value="btn_save" />
             <String fx:value="txtCode" />
          </styleClass>
       </TextField>
-      <TextField fx:id="txtName" layoutX="214.0" layoutY="161.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <TextField fx:id="txtName" layoutX="214.0" layoutY="161.0" onKeyReleased="#txtNameOnAction" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
       <ComboBox fx:id="cmbStatus" layoutX="214.0" layoutY="223.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
       <Button fx:id="btn_save" layoutX="530.0" layoutY="112.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="36.0" prefWidth="97.0" stylesheets="@style/style.css" text="Save">
          <styleClass>

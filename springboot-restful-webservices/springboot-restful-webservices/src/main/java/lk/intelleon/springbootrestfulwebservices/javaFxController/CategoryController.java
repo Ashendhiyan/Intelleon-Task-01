@@ -7,9 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.intelleon.springbootrestfulwebservices.dto.CategoryDTO;
+import lk.intelleon.springbootrestfulwebservices.util.Service;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -45,9 +47,9 @@ public class CategoryController {
     public TableColumn<CategoryDTO, String> colName;
     @FXML
     public TableColumn<CategoryDTO, String> colStatus;
-
+    boolean isMatchICategoryCode = false;
+    boolean isMatchCategoryName = false;
     private ObservableList<CategoryDTO> categoryList = FXCollections.observableArrayList();
-
 
     public void initialize() {
         // Initialize the ComboBox with "Active" and "Inactive" values
@@ -94,7 +96,6 @@ public class CategoryController {
         }
     }
 
-
     public void handleRowClick(MouseEvent event) {
         if (event.getClickCount() == 1) { // Check if single click
             CategoryDTO selectedCategory = (CategoryDTO) tblCategory.getSelectionModel().getSelectedItem();
@@ -107,10 +108,10 @@ public class CategoryController {
         }
     }
 
-    public void clearTextFields(){
+    public void clearTextFields() {
         txtCode.setText("");
         txtName.setText("");
-       cmbStatus.setValue("");
+        cmbStatus.setValue("");
     }
 
     public void saveOnAction(ActionEvent actionEvent) {
@@ -231,4 +232,23 @@ public class CategoryController {
         }
     }
 
+    public void txtCodeOnActiion(KeyEvent keyEvent) {
+        if (Service.isValidCategoryCode(txtCode.getText())) {
+            txtCode.setStyle("-fx-border-color: green");
+            isMatchICategoryCode = true;
+        } else {
+            txtCode.setStyle("-fx-border-color: red");
+            isMatchICategoryCode = true;
+        }
+    }
+
+    public void txtNameOnAction(KeyEvent keyEvent) {
+        if (Service.isValidName(txtName.getText())) {
+            txtName.setStyle("-fx-border-color: green");
+            isMatchCategoryName = true;
+        } else {
+            txtName.setStyle("-fx-border-color: red");
+            isMatchCategoryName = true;
+        }
+    }
 }

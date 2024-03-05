@@ -44,7 +44,7 @@
             <String fx:value="txtCode" />
          </styleClass>
       </TextField>
-      <TextField fx:id="txtName" layoutX="226.0" layoutY="152.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <TextField fx:id="txtName" layoutX="226.0" layoutY="152.0" onKeyReleased="#txtNameOnAction" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
       <ComboBox fx:id="cmbStatus" layoutX="227.0" layoutY="288.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
          <cursor>
             <Cursor fx:constant="HAND" />
