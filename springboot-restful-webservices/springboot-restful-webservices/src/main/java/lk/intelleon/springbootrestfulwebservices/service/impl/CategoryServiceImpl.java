@@ -46,4 +46,9 @@ public class CategoryServiceImpl implements CategoryService {
         List<CategoryEntity> all = repository.findAll();
         return convertor.CategoryEntityListToCategoryDTOList(all);
     }
+
+    @Override
+    public CategoryEntity getCategoryById(Long categoryId) {
+        return repository.findById(categoryId).orElse(null);
+    }
 }

@@ -11,9 +11,7 @@ public class ItemDTO {
     private Long id;
     private String code;
     private String name;
-    private Long categoryId; // Assuming this is the ID of the category
-    private String categoryName; // Assuming you want to transfer the category name as well
-    private Long unitId; // Assuming this is the ID of the unit
-    private String unitName; // Assuming you want to transfer the unit name as well
+    private Long categoryId; // ID of the category
+    private Long unitId; // ID of the unit
     private String status;
 }

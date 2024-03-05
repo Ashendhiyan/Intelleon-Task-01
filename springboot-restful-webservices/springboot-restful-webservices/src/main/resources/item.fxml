@@ -46,7 +46,11 @@
          </styleClass>
       </TextField>
       <TextField fx:id="txtName" layoutX="220.0" layoutY="151.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
-      <ComboBox fx:id="cmbStatus" layoutX="221.0" layoutY="287.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <ComboBox fx:id="cmbStatus" layoutX="221.0" layoutY="287.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
       <Button fx:id="btn_save" layoutX="536.0" layoutY="115.0" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="36.0" prefWidth="97.0" stylesheets="@style/style.css" text="Save">
          <styleClass>
             <String fx:value="btn_suppliers" />
@@ -75,25 +79,33 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TableView fx:id="tblItems" layoutX="26.0" layoutY="339.0" onMouseClicked="#handleRowClick" prefHeight="249.0" prefWidth="739.0">
+      <TableView fx:id="tblItems" layoutX="41.0" layoutY="339.0" onMouseClicked="#handleRowClick" prefHeight="249.0" prefWidth="706.0">
          <columns>
-            <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
-            <TableColumn fx:id="colCode" prefWidth="99.0" text="Code" />
-            <TableColumn fx:id="colName" prefWidth="124.0" text="Name " />
-            <TableColumn fx:id="colCategory" prefWidth="145.0" text="Category" />
-            <TableColumn fx:id="colUnit" prefWidth="145.0" text="Unit" />
-            <TableColumn fx:id="colStatus" prefWidth="148.0" text="Status " />
+            <TableColumn fx:id="colId" prefWidth="81.33332824707031" text="ID" />
+            <TableColumn fx:id="colCode" prefWidth="103.66667175292969" text="Code" />
+            <TableColumn fx:id="colName" prefWidth="113.33332824707031" text="Name " />
+            <TableColumn fx:id="colCategoryid" prefWidth="128.3333282470703" text="Category Code" />
+            <TableColumn fx:id="colUnitId" prefWidth="132.0" text="Unit Code" />
+            <TableColumn fx:id="colStatus" prefWidth="147.66668701171875" text="Status " />
          </columns>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </TableView>
-      <ComboBox fx:id="cmbCategory" layoutX="220.0" layoutY="197.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <ComboBox fx:id="cmbCategory" layoutX="220.0" layoutY="197.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
       <Label layoutX="113.0" layoutY="236.0" prefHeight="36.0" prefWidth="97.0" text="Unit">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbUnit" layoutX="221.0" layoutY="241.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <ComboBox fx:id="cmbUnit" layoutX="221.0" layoutY="241.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ComboBox>
    </children>
 </AnchorPane>

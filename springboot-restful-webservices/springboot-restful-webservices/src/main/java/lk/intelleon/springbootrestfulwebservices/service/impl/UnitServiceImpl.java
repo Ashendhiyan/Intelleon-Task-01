@@ -46,4 +46,9 @@ public class UnitServiceImpl implements UnitService {
         List<UnitEntity> all = repository.findAll();
         return convertor.unitEntityListTounitDTOList(all);
     }
+
+    @Override
+    public UnitEntity getUnitById(Long unitId) {
+        return repository.findById(unitId).orElse(null);
+    }
 }

@@ -76,6 +76,7 @@ public class DashboardController {
         }
     }
 
+    @FXML
     public void btnItemOnAction(ActionEvent actionEvent) {
         try {
             // Load the FXML file for the item form

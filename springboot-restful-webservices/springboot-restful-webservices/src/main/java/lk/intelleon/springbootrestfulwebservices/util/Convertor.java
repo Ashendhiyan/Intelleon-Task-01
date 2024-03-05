@@ -1,9 +1,11 @@
 package lk.intelleon.springbootrestfulwebservices.util;
 
 import lk.intelleon.springbootrestfulwebservices.dto.CategoryDTO;
+import lk.intelleon.springbootrestfulwebservices.dto.ItemDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.SupplierDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.UnitDTO;
 import lk.intelleon.springbootrestfulwebservices.entity.CategoryEntity;
+import lk.intelleon.springbootrestfulwebservices.entity.ItemEntity;
 import lk.intelleon.springbootrestfulwebservices.entity.SupplierEntity;
 import lk.intelleon.springbootrestfulwebservices.entity.UnitEntity;
 import org.modelmapper.ModelMapper;
@@ -50,5 +52,17 @@ public class Convertor {
     }
     public List<CategoryDTO> CategoryEntityListToCategoryDTOList(List<CategoryEntity> category){
         return modelMapper.map(category,new TypeToken<List<CategoryDTO>>(){}.getType());
+    }
+
+
+    //Item
+    public ItemEntity ItemDtoToItemEntity(ItemDTO itemDTO) {
+        return modelMapper.map(itemDTO, ItemEntity.class);
+    }
+    public ItemDTO ItemEntityToItemDto(ItemEntity itemEntity) {
+        return modelMapper.map(itemEntity,ItemDTO.class);
+    }
+    public List<ItemDTO> ItemEntityListToItemDTOList(List<ItemEntity> items){
+        return modelMapper.map(items,new TypeToken<List<ItemDTO>>(){}.getType());
     }
 }
