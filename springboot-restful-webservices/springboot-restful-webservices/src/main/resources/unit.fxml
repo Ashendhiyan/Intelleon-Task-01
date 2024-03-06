@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -39,7 +40,10 @@
          </styleClass>
       </TextField>
       <TextField fx:id="txtName" layoutX="220.0" layoutY="164.0" onKeyReleased="#txtNameOnAction" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
-      <ComboBox fx:id="cmbStatus" layoutX="220.0" layoutY="226.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <ComboBox fx:id="cmbStatus" layoutX="220.0" layoutY="226.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
       <Button fx:id="btn_save" layoutX="536.0" layoutY="115.0" mnemonicParsing="false" onAction="#saveOnAction" prefHeight="36.0" prefWidth="97.0" stylesheets="@style/style.css" text="Save" textFill="#171717">
          <styleClass>
             <String fx:value="btn_suppliers" />
@@ -48,16 +52,25 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button fx:id="btn_update" layoutX="536.0" layoutY="169.0" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="36.0" prefWidth="97.0" styleClass="btn_update" stylesheets="@style/style.css" text="Update">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Button fx:id="btn_delete" layoutX="536.0" layoutY="229.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="36.0" prefWidth="97.0" styleClass="btn_delete" stylesheets="@style/style.css" text="Delete">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <TableView fx:id="tblUnit" layoutX="62.0" layoutY="339.0" onMouseClicked="#handleRowClick" prefHeight="249.0" prefWidth="677.0">
          <columns>
@@ -66,6 +79,9 @@
             <TableColumn fx:id="colName" prefWidth="191.0" text="Name " />
             <TableColumn fx:id="colstatus" prefWidth="195.0" text="Status " />
          </columns>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </TableView>
    </children>
 </AnchorPane>

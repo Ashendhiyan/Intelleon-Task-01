@@ -46,7 +46,10 @@
       </TextField>
       <TextField fx:id="txtName" layoutX="210.0" layoutY="144.0" onKeyReleased="#txtNameOnAction" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
       <TextField fx:id="txtAddress" layoutX="210.0" layoutY="193.0" onKeyReleased="#txtAddressOnAction" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
-      <ComboBox fx:id="cmbStatus" layoutX="210.0" layoutY="240.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css" />
+      <ComboBox fx:id="cmbStatus" layoutX="210.0" layoutY="240.0" prefHeight="25.0" prefWidth="182.0" styleClass="txtCode" stylesheets="@style/style.css">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
       <Button fx:id="btn_save" layoutX="526.0" layoutY="105.0" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="36.0" prefWidth="97.0" stylesheets="@style/style.css" text="Save">
          <styleClass>
             <String fx:value="btn_suppliers" />
