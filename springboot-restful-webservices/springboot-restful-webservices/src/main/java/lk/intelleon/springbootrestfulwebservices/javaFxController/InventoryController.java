@@ -1,16 +1,20 @@
 package lk.intelleon.springbootrestfulwebservices.javaFxController;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.intelleon.springbootrestfulwebservices.dto.CategoryDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.InventoryDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.ItemDTO;
+import lk.intelleon.springbootrestfulwebservices.util.LocalDateAdapter;
+import lk.intelleon.springbootrestfulwebservices.util.Service;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 @Component
@@ -79,7 +84,10 @@ public class InventoryController {
             inventoryDTO.setStatus(cmbStatus.getValue());
 
             // Convert InventoryDTO object to JSON
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                    .create();
+
             String jsonInputString = gson.toJson(inventoryDTO);
 
             // Send JSON data
@@ -126,7 +134,10 @@ public class InventoryController {
                 updatedInventoryDTO.setStatus(cmbStatus.getValue());
 
                 // Convert updated InventoryDTO object to JSON
-                Gson gson = new Gson();
+                Gson gson = new GsonBuilder()
+                        .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                        .create();
+
                 String jsonInputString = gson.toJson(updatedInventoryDTO);
 
                 // Send JSON data
@@ -267,7 +278,10 @@ public class InventoryController {
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (InputStreamReader reader = new InputStreamReader(conn.getInputStream())) {
-                    Gson gson = new Gson();
+                    Gson gson = new GsonBuilder()
+                            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                            .create();
+
                     InventoryDTO[] inventoryArray = gson.fromJson(reader, InventoryDTO[].class);
                     inventoryList.clear();
                     inventoryList.addAll(Arrays.asList(inventoryArray));
@@ -289,5 +303,16 @@ public class InventoryController {
         cmbItems.getSelectionModel().clearSelection();
         cmbApproval.getSelectionModel().clearSelection();
         datePicker.setValue(null);
+    }
+
+    boolean isMatchQty=false;
+    public void txtReceived_qtyOnAction(KeyEvent keyEvent) {
+        if (Service.receivedQty(txtReceived_qty.getText())) {
+            txtReceived_qty.setStyle("-fx-border-color: green");
+            isMatchQty = true;
+        } else {
+            txtReceived_qty.setStyle("-fx-border-color: red");
+            isMatchQty = false;
+        }
     }
 }

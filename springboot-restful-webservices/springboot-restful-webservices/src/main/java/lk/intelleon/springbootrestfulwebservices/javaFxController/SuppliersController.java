@@ -124,51 +124,59 @@ public class SuppliersController {
 
     @FXML
     void SaveOnAction(ActionEvent event) {
-        try {
-            URL url = new URL("http://localhost:8080/api/v1/suppliers");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setDoOutput(true);
+        if(isMatchSupplierCode && isMatchSupplierName  && isMatchSupplierAddress) {
+            try {
+                URL url = new URL("http://localhost:8080/api/v1/suppliers");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
 
-            // Create SupplierDTO object
-            SupplierDTO supplierDTO = new SupplierDTO();
-            supplierDTO.setSupplierCode(txtCode.getText());
-            supplierDTO.setName(txtName.getText());
-            supplierDTO.setAddress(txtAddress.getText());
-            supplierDTO.setStatus(cmbStatus.getValue());
-            //
+                // Create SupplierDTO object
+                SupplierDTO supplierDTO = new SupplierDTO();
+                supplierDTO.setSupplierCode(txtCode.getText());
+                supplierDTO.setName(txtName.getText());
+                supplierDTO.setAddress(txtAddress.getText());
+                supplierDTO.setStatus(cmbStatus.getValue());
+                //
 
-            // Convert SupplierDTO object to JSON
-            Gson gson = new Gson();
-            String jsonInputString = gson.toJson(supplierDTO);
+                // Convert SupplierDTO object to JSON
+                Gson gson = new Gson();
+                String jsonInputString = gson.toJson(supplierDTO);
 
-            // Send JSON data
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length);
+                // Send JSON data
+                try (OutputStream os = conn.getOutputStream()) {
+                    byte[] input = jsonInputString.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+
+                // Get response code
+                int responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // Handle successful response
+                    System.out.println("Supplier saved successfully!");
+                    showConfirmationMessage("Supplier saved successfully!");
+                    loadDataFromBackend();
+                    clearTextFields();
+                } else {
+                    // Handle error response
+                    System.out.println("Error saving supplier: " + responseCode);
+                    showErrorAlert("Error saving supplier: " + responseCode);
+                }
+
+                conn.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            // Get response code
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Handle successful response
-                System.out.println("Supplier saved successfully!");
-                loadDataFromBackend();
-                clearTextFields();
-            } else {
-                // Handle error response
-                System.out.println("Error saving supplier: " + responseCode);
-            }
-
-            conn.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }else {
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before saving.");
         }
     }
 
     @FXML
     void UpdateOnAction(ActionEvent event) {
+        if(isMatchSupplierCode && isMatchSupplierName  && isMatchSupplierAddress) {
         SupplierDTO selectedSupplier = tblSuppliers.getSelectionModel().getSelectedItem();
         if (selectedSupplier != null) {
             try {
@@ -199,12 +207,14 @@ public class SuppliersController {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
                     System.out.println("Supplier updated successfully!");
+                    showConfirmationMessage("Supplier updated successfully!");
                     // Refresh table data after update
                     loadDataFromBackend();
                     clearTextFields();
                 } else {
                     // Handle error response
                     System.out.println("Error updating supplier: " + responseCode);
+                   showErrorAlert("Error updating supplier: " + responseCode);
                 }
 
                 conn.disconnect();
@@ -214,7 +224,10 @@ public class SuppliersController {
         } else {
             System.out.println("Please select a supplier to update.");
         }
-
+        }else {
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before updating.");
+        }
     }
 
     @FXML
@@ -230,6 +243,7 @@ public class SuppliersController {
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Remove deleted supplier from the table
+                    showConfirmationMessage("Supplier deleted successfully!");
                     suppliersList.remove(selectedSupplier);
                     System.out.println("Supplier deleted successfully!");
                     clearTextFields();
@@ -252,7 +266,7 @@ public class SuppliersController {
             isMatchSupplierCode = true;
         } else {
             txtCode.setStyle("-fx-border-color: red");
-            isMatchSupplierCode = true;
+            isMatchSupplierCode = false;
         }
     }
 
@@ -262,17 +276,34 @@ public class SuppliersController {
             isMatchSupplierName = true;
         } else {
             txtName.setStyle("-fx-border-color: red");
-            isMatchSupplierName = true;
+            isMatchSupplierName = false;
         }
     }
 
     public void txtAddressOnAction(KeyEvent keyEvent) {
-        if (Service.isValidName(txtName.getText())) {
-            txtName.setStyle("-fx-border-color: green");
+        if (Service.isValidName(txtAddress.getText())) {
+            txtAddress.setStyle("-fx-border-color: green");
             isMatchSupplierAddress = true;
         } else {
-            txtName.setStyle("-fx-border-color: red");
-            isMatchSupplierAddress = true;
+            txtAddress.setStyle("-fx-border-color: red");
+            isMatchSupplierAddress = false;
         }
+    }
+
+    private void showConfirmationMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+    private void showErrorAlert(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
     }
 }

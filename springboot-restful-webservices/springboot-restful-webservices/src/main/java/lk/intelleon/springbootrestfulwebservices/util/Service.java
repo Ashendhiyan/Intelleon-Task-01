@@ -42,9 +42,9 @@ public class Service {
         return matcher.matches();
     }
 
-    public static boolean QtyOnHand(String QtyOnHand) {
+    public static boolean receivedQty(String receivedQty) {
         Pattern pattern = Pattern.compile("^[0-9]{2,10}");
-        Matcher matcher = pattern.matcher(QtyOnHand);
+        Matcher matcher = pattern.matcher(receivedQty);
         return matcher.matches();
     }
 

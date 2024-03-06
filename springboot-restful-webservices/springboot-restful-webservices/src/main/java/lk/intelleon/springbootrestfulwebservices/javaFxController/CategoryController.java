@@ -115,66 +115,24 @@ public class CategoryController {
     }
 
     public void saveOnAction(ActionEvent actionEvent) {
-        try {
-            URL url = new URL("http://localhost:8080/api/v1/category");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setDoOutput(true);
-
-            // Create SupplierDTO object
-            CategoryDTO categoryDTO = new CategoryDTO();
-            categoryDTO.setCode(txtCode.getText());
-            categoryDTO.setName(txtName.getText());
-            categoryDTO.setStatus(cmbStatus.getValue());
-            //
-
-            // Convert SupplierDTO object to JSON
-            Gson gson = new Gson();
-            String jsonInputString = gson.toJson(categoryDTO);
-
-            // Send JSON data
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length);
-            }
-
-            // Get response code
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Handle successful response
-                System.out.println("Category saved successfully!");
-                loadDataFromBackend();
-                clearTextFields();
-            } else {
-                // Handle error response
-                System.out.println("Error saving Category: " + responseCode);
-            }
-
-            conn.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateOnAction(ActionEvent actionEvent) {
-        CategoryDTO selectedCategory = tblCategory.getSelectionModel().getSelectedItem();
-        if (selectedCategory != null) {
+        if (isMatchICategoryCode && isMatchCategoryName) {
             try {
-                URL url = new URL("http://localhost:8080/api/v1/category/" + selectedCategory.getId());
+                URL url = new URL("http://localhost:8080/api/v1/category");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("PUT");
+                conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
 
-                // Create SupplierDTO object with updated details
-                selectedCategory.setCode(txtCode.getText());
-                selectedCategory.setName(txtName.getText());
-                selectedCategory.setStatus(cmbStatus.getValue());
+                // Create SupplierDTO object
+                CategoryDTO categoryDTO = new CategoryDTO();
+                categoryDTO.setCode(txtCode.getText());
+                categoryDTO.setName(txtName.getText());
+                categoryDTO.setStatus(cmbStatus.getValue());
+                //
 
                 // Convert SupplierDTO object to JSON
                 Gson gson = new Gson();
-                String jsonInputString = gson.toJson(selectedCategory);
+                String jsonInputString = gson.toJson(categoryDTO);
 
                 // Send JSON data
                 try (OutputStream os = conn.getOutputStream()) {
@@ -186,13 +144,13 @@ public class CategoryController {
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
-                    System.out.println("Category updated successfully!");
-                    // Refresh table data after update
+                    System.out.println("Category saved successfully!");
+                    showConfirmationMessage("Category saved successfully!");
                     loadDataFromBackend();
                     clearTextFields();
                 } else {
                     // Handle error response
-                    System.out.println("Error updating Category: " + responseCode);
+                    System.out.println("Error saving Category: " + responseCode);
                 }
 
                 conn.disconnect();
@@ -200,7 +158,61 @@ public class CategoryController {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("Please select a Category to update.");
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before saving.");
+        }
+    }
+
+    public void updateOnAction(ActionEvent actionEvent) {
+        if (isMatchICategoryCode && isMatchCategoryName) {
+            CategoryDTO selectedCategory = tblCategory.getSelectionModel().getSelectedItem();
+            if (selectedCategory != null) {
+                try {
+                    URL url = new URL("http://localhost:8080/api/v1/category/" + selectedCategory.getId());
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+                    // Create SupplierDTO object with updated details
+                    selectedCategory.setCode(txtCode.getText());
+                    selectedCategory.setName(txtName.getText());
+                    selectedCategory.setStatus(cmbStatus.getValue());
+
+                    // Convert SupplierDTO object to JSON
+                    Gson gson = new Gson();
+                    String jsonInputString = gson.toJson(selectedCategory);
+
+                    // Send JSON data
+                    try (OutputStream os = conn.getOutputStream()) {
+                        byte[] input = jsonInputString.getBytes("utf-8");
+                        os.write(input, 0, input.length);
+                    }
+
+                    // Get response code
+                    int responseCode = conn.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Handle successful response
+                        System.out.println("Category updated successfully!");
+                       showConfirmationMessage("Category updated successfully!");
+                        // Refresh table data after update
+                        loadDataFromBackend();
+                        clearTextFields();
+                    } else {
+                        // Handle error response
+                        System.out.println("Error updating Category: " + responseCode);
+                    }
+
+                    conn.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Please select a Category to update.");
+            }
+        } else {
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before updating.");
         }
     }
 
@@ -216,6 +228,7 @@ public class CategoryController {
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Remove deleted supplier from the table
+                    showConfirmationMessage("Category deleted successfully!");
                     categoryList.remove(selectedCategory);
                     System.out.println("Category deleted successfully!");
                     clearTextFields();
@@ -238,7 +251,7 @@ public class CategoryController {
             isMatchICategoryCode = true;
         } else {
             txtCode.setStyle("-fx-border-color: red");
-            isMatchICategoryCode = true;
+            isMatchICategoryCode = false;
         }
     }
 
@@ -248,7 +261,24 @@ public class CategoryController {
             isMatchCategoryName = true;
         } else {
             txtName.setStyle("-fx-border-color: red");
-            isMatchCategoryName = true;
+            isMatchCategoryName = false;
         }
+    }
+
+    private void showConfirmationMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+    private void showErrorAlert(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
     }
 }

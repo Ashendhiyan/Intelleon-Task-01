@@ -116,6 +116,7 @@ public class UnitController {
 
     @FXML
     public void saveOnAction(ActionEvent actionEvent) {
+        if (isMatchUnitCode && isMatchUnitName){
         try {
             URL url = new URL("http://localhost:8080/api/v1/unit");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -145,6 +146,7 @@ public class UnitController {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 // Handle successful response
                 System.out.println("Unit saved successfully!");
+                showConfirmationMessage("Unit saved successfully!");
                 loadDataFromBackend();
                 clearTextFields();
             } else {
@@ -156,10 +158,15 @@ public class UnitController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        }else {
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before saving.");
+        }
     }
 
     @FXML
     public void updateOnAction(ActionEvent actionEvent) {
+        if (isMatchUnitCode && isMatchUnitName){
         UnitDTO selectedUnit = tblUnit.getSelectionModel().getSelectedItem();
         if (selectedUnit != null) {
             try {
@@ -189,6 +196,7 @@ public class UnitController {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
                     System.out.println("Unit updated successfully!");
+                    showConfirmationMessage("Unit updated successfully!");
                     // Refresh table data after update
                     loadDataFromBackend();
                     clearTextFields();
@@ -204,7 +212,10 @@ public class UnitController {
         } else {
             System.out.println("Please select a unit to update.");
         }
-
+        }else {
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before updating.");
+        }
     }
 
     @FXML
@@ -221,6 +232,7 @@ public class UnitController {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Remove deleted supplier from the table
                     unitList.remove(selectedUnit);
+                    showConfirmationMessage("unit deleted successfully!");
                     System.out.println("unit deleted successfully!");
                     clearTextFields();
                 } else {
@@ -242,7 +254,7 @@ public class UnitController {
             isMatchUnitCode = true;
         } else {
             txtCode.setStyle("-fx-border-color: red");
-            isMatchUnitCode = true;
+            isMatchUnitCode = false;
         }
     }
 
@@ -252,7 +264,24 @@ public class UnitController {
             isMatchUnitName = true;
         } else {
             txtName.setStyle("-fx-border-color: red");
-            isMatchUnitName = true;
+            isMatchUnitName = false;
         }
+    }
+
+    private void showConfirmationMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+    private void showErrorAlert(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
     }
 }

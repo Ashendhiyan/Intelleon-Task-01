@@ -16,8 +16,6 @@ import lk.intelleon.springbootrestfulwebservices.dto.UnitDTO;
 import lk.intelleon.springbootrestfulwebservices.util.Service;
 import org.springframework.stereotype.Component;
 
-
-import javax.swing.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -71,7 +69,7 @@ public class ItemController {
             isMatchItemCode = true;
         } else {
             txtCode.setStyle("-fx-border-color: red");
-            isMatchItemCode = true;
+            isMatchItemCode = false;
         }
     }
 
@@ -81,7 +79,7 @@ public class ItemController {
             isMatchItemName = true;
         } else {
             txtName.setStyle("-fx-border-color: red");
-            isMatchItemName = true;
+            isMatchItemName = false;
         }
     }
 
@@ -166,9 +164,7 @@ public class ItemController {
 
     @FXML
     void SaveOnAction(ActionEvent event) {
-        if(!isMatchItemCode){
-        }else if(!isMatchItemName) {
-        }else {
+        if (isMatchItemCode && isMatchItemName) {
             try {
                 URL url = new URL("http://localhost:8080/api/v1/item");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -198,62 +194,16 @@ public class ItemController {
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Item saved successfully!");
                     System.out.println("Item saved successfully!");
+                    // Show confirmation message
+                    showConfirmationMessage("Supplier saved successfully!");
                     loadDataFromBackend(); // Refresh data
                     clearTextFields(); // Clear input fields
                 } else {
                     // Handle error response
                     System.out.println("Error saving item: " + responseCode);
-                }
-
-                conn.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @FXML
-    void UpdateOnAction(ActionEvent event) {
-        ItemDTO selectedItem = tblItems.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            try {
-                URL url = new URL("http://localhost:8080/api/v1/item/" + selectedItem.getId());
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("PUT");
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setDoOutput(true);
-
-                // Create updated ItemDTO object
-                ItemDTO updatedItemDTO = new ItemDTO();
-                updatedItemDTO.setCode(txtCode.getText());
-                updatedItemDTO.setName(txtName.getText());
-                updatedItemDTO.setCategoryId(cmbCategory.getValue().getId());
-                updatedItemDTO.setUnitId(cmbUnit.getValue().getId());
-                updatedItemDTO.setStatus(cmbStatus.getValue());
-
-                // Convert updated ItemDTO object to JSON
-                Gson gson = new Gson();
-                String jsonInputString = gson.toJson(updatedItemDTO);
-
-                // Send JSON data
-                try (OutputStream os = conn.getOutputStream()) {
-                    byte[] input = jsonInputString.getBytes("utf-8");
-                    os.write(input, 0, input.length);
-                }
-
-                // Get response code
-                int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // Handle successful response
-                    System.out.println("Item updated successfully!");
-                    loadDataFromBackend();
-                    clearTextFields();
-                } else {
-                    // Handle error response
-                    System.out.println("Error updating item: " + responseCode);
+                    // Show error message
+                    showErrorAlert("Error saving supplier: " + responseCode);
                 }
 
                 conn.disconnect();
@@ -261,8 +211,68 @@ public class ItemController {
                 e.printStackTrace();
             }
         } else {
-            // Handle case where no item is selected
-            System.out.println("Please select an item to update.");
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before saving.");
+        }
+    }
+
+    @FXML
+    void UpdateOnAction(ActionEvent event) {
+        if (isMatchItemCode && isMatchItemName) {
+            ItemDTO selectedItem = tblItems.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                try {
+                    URL url = new URL("http://localhost:8080/api/v1/item/" + selectedItem.getId());
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+                    // Create updated ItemDTO object
+                    ItemDTO updatedItemDTO = new ItemDTO();
+                    updatedItemDTO.setCode(txtCode.getText());
+                    updatedItemDTO.setName(txtName.getText());
+                    updatedItemDTO.setCategoryId(cmbCategory.getValue().getId());
+                    updatedItemDTO.setUnitId(cmbUnit.getValue().getId());
+                    updatedItemDTO.setStatus(cmbStatus.getValue());
+
+                    // Convert updated ItemDTO object to JSON
+                    Gson gson = new Gson();
+                    String jsonInputString = gson.toJson(updatedItemDTO);
+
+                    // Send JSON data
+                    try (OutputStream os = conn.getOutputStream()) {
+                        byte[] input = jsonInputString.getBytes("utf-8");
+                        os.write(input, 0, input.length);
+                    }
+
+                    // Get response code
+                    int responseCode = conn.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Handle successful response
+                        System.out.println("Item updated successfully!");
+                        // Show confirmation message
+                        showConfirmationMessage("Supplier Updated successfully!");
+                        loadDataFromBackend();
+                        clearTextFields();
+                    } else {
+                        // Handle error response
+                        System.out.println("Error updating item: " + responseCode);
+                        // Show error message
+                        showErrorAlert("Error updating supplier: " + responseCode);
+                    }
+
+                    conn.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // Handle case where no item is selected
+                System.out.println("Please select an item to update.");
+            }
+        } else {
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before update.");
         }
     }
 
@@ -280,6 +290,7 @@ public class ItemController {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
                     System.out.println("Item deleted successfully!");
+                    showConfirmationMessage("Item deleted successfully!");
                     loadDataFromBackend();
                 } else {
                     // Handle error response
@@ -354,6 +365,24 @@ public class ItemController {
         cmbStatus.getSelectionModel().clearSelection();
         cmbCategory.getSelectionModel().clearSelection();
         cmbUnit.getSelectionModel().clearSelection();
+    }
+
+
+    private void showConfirmationMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+    private void showErrorAlert(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
     }
 
 }
