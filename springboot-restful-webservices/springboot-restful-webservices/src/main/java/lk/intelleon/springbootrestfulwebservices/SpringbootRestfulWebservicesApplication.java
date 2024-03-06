@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+
 @SpringBootApplication
 public class SpringbootRestfulWebservicesApplication extends Application {
     public static ConfigurableApplicationContext applicationContext;
@@ -27,10 +29,16 @@ public class SpringbootRestfulWebservicesApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         applicationContext = SpringApplication.run(SpringbootRestfulWebservicesApplication.class);
-        FXMLLoader loader = new FXMLLoader(SpringbootRestfulWebservicesApplication.class.getResource("/dashboard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         loader.setControllerFactory(applicationContext::getBean);
-        Scene scene = new Scene(loader.load(), 1000, 600, false, SceneAntialiasing.BALANCED);
-        stage.setTitle("CRUD operation using JAVAFX / SPRINGBOOT /MYSQL");
+        try {
+            rootNode = loader.load();
+        } catch (IOException e) {
+            // Handle FXML loading error
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(rootNode, 1000, 600, false, SceneAntialiasing.BALANCED);
+        stage.setTitle("Login Page");
         stage.setScene(scene);
         stage.show();
     }
