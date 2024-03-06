@@ -43,7 +43,7 @@ public class Service {
     }
 
     public static boolean receivedQty(String receivedQty) {
-        Pattern pattern = Pattern.compile("^[0-9]{2,10}");
+        Pattern pattern = Pattern.compile("^[0-9A-Za-z]{1,10}");
         Matcher matcher = pattern.matcher(receivedQty);
         return matcher.matches();
     }
@@ -68,28 +68,28 @@ public class Service {
 
     //(P-001 OR p-001)
     public static boolean isValidItemCode(String ItemCode) {
-        Pattern pattern = Pattern.compile("^[Pp]-[0-9]{1,3}");
+        Pattern pattern = Pattern.compile("^[Pp]-[0-9]{3}");
         Matcher matcher = pattern.matcher(ItemCode);
         return matcher.matches();
     }
 
     //(C-001 OR c-001)
     public static boolean isValidCategoryCode(String categoryCode) {
-        Pattern pattern = Pattern.compile("^[Cc]-[0-9]{1,3}");
+        Pattern pattern = Pattern.compile("^[Cc]-[0-9]{3}");
         Matcher matcher = pattern.matcher(categoryCode);
         return matcher.matches();
     }
 
     //(U-001 OR u-001)
     public static boolean isValidUnitCode(String unitCode) {
-        Pattern pattern = Pattern.compile("^[Uu]-[0-9]{1,3}");
+        Pattern pattern = Pattern.compile("^[Uu]-[0-9]{3}");
         Matcher matcher = pattern.matcher(unitCode);
         return matcher.matches();
     }
 
     //(U-001 OR u-001)
     public static boolean isValidSupplierCode(String SupplierCode) {
-        Pattern pattern = Pattern.compile("^[Ss]-[0-9]{1,3}");
+        Pattern pattern = Pattern.compile("^[Ss]-[0-9]{3}");
         Matcher matcher = pattern.matcher(SupplierCode);
         return matcher.matches();
     }

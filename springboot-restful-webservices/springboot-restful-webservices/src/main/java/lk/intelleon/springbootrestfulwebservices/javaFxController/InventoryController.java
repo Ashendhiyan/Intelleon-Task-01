@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import lk.intelleon.springbootrestfulwebservices.dto.CategoryDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.InventoryDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.ItemDTO;
 import lk.intelleon.springbootrestfulwebservices.util.LocalDateAdapter;
@@ -28,117 +27,57 @@ import java.util.Arrays;
 @Component
 public class InventoryController {
 
+    boolean isMatchQty = false;
     private ObservableList<InventoryDTO> inventoryList = FXCollections.observableArrayList();
-
     @FXML
     private TextField txtReceived_qty;
-
     @FXML
     private ComboBox<String> cmbStatus;
-
     @FXML
     private TableView<InventoryDTO> tblInventory;
-
     @FXML
     private TableColumn<InventoryDTO, Long> colId;
-
     @FXML
     private TableColumn<InventoryDTO, String> colItem;
-
     @FXML
     private TableColumn<InventoryDTO, String> collDate;
-
     @FXML
     private TableColumn<InventoryDTO, Integer> colQty;
-
     @FXML
     private TableColumn<InventoryDTO, String> colApproval;
-
     @FXML
     private TableColumn<InventoryDTO, String> colStatus;
-
     @FXML
     private ComboBox<ItemDTO> cmbItems;
-
     @FXML
     private ComboBox<String> cmbApproval;
-
     @FXML
     private DatePicker datePicker;
 
     @FXML
     void SaveOnAction(ActionEvent event) {
-        try {
-            URL url = new URL("http://localhost:8080/api/v1/inventory");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setDoOutput(true);
-
-            // Create InventoryDTO object
-            InventoryDTO inventoryDTO = new InventoryDTO();
-            inventoryDTO.setItemId(cmbItems.getValue().getId());
-            inventoryDTO.setReceivedDate(datePicker.getValue());
-            inventoryDTO.setReceivedQty(Integer.parseInt(txtReceived_qty.getText()));
-            inventoryDTO.setApprovalStatus(cmbApproval.getValue());
-            inventoryDTO.setStatus(cmbStatus.getValue());
-
-            // Convert InventoryDTO object to JSON
-            Gson gson = new GsonBuilder()
-                    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                    .create();
-
-            String jsonInputString = gson.toJson(inventoryDTO);
-
-            // Send JSON data
-            try (OutputStream os = conn.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length);
-            }
-
-            // Get response code
-            int responseCode = conn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Handle successful response
-                System.out.println("Inventory saved successfully!");
-                loadDataFromBackend(); // Refresh data
-                clearFields(); // Clear input fields
-            } else {
-                // Handle error response
-                System.out.println("Error saving inventory: " + responseCode);
-            }
-
-            conn.disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void UpdateOnAction(ActionEvent event) {
-        InventoryDTO selectedItem = tblInventory.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
+        if (isMatchQty) {
             try {
-                URL url = new URL("http://localhost:8080/api/v1/inventory/" + selectedItem.getId());
+                URL url = new URL("http://localhost:8080/api/v1/inventory");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("PUT");
+                conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
 
-                // Create updated InventoryDTO object
-                InventoryDTO updatedInventoryDTO = new InventoryDTO();
-                updatedInventoryDTO.setItemId(cmbItems.getValue().getId());
-                updatedInventoryDTO.setReceivedDate(datePicker.getValue());
-                updatedInventoryDTO.setReceivedQty(Integer.parseInt(txtReceived_qty.getText()));
-                updatedInventoryDTO.setApprovalStatus(cmbApproval.getValue());
-                updatedInventoryDTO.setStatus(cmbStatus.getValue());
+                // Create InventoryDTO object
+                InventoryDTO inventoryDTO = new InventoryDTO();
+                inventoryDTO.setItemId(cmbItems.getValue().getId());
+                inventoryDTO.setReceivedDate(datePicker.getValue());
+                inventoryDTO.setReceivedQty(txtReceived_qty.getText());
+                inventoryDTO.setApprovalStatus(cmbApproval.getValue());
+                inventoryDTO.setStatus(cmbStatus.getValue());
 
-                // Convert updated InventoryDTO object to JSON
+                // Convert InventoryDTO object to JSON
                 Gson gson = new GsonBuilder()
                         .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                         .create();
 
-                String jsonInputString = gson.toJson(updatedInventoryDTO);
+                String jsonInputString = gson.toJson(inventoryDTO);
 
                 // Send JSON data
                 try (OutputStream os = conn.getOutputStream()) {
@@ -150,12 +89,13 @@ public class InventoryController {
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
-                    System.out.println("Inventory updated successfully!");
-                    loadDataFromBackend();
-                    clearFields();
+                    System.out.println("Inventory saved successfully!");
+                    showConfirmationMessage("Inventory saved successfully!");
+                    loadDataFromBackend(); // Refresh data
+                    clearFields(); // Clear input fields
                 } else {
                     // Handle error response
-                    System.out.println("Error updating inventory: " + responseCode);
+                    System.out.println("Error saving inventory: " + responseCode);
                 }
 
                 conn.disconnect();
@@ -163,8 +103,68 @@ public class InventoryController {
                 e.printStackTrace();
             }
         } else {
-            // Handle case where no item is selected
-            System.out.println("Please select an inventory item to update.");
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before saving.");
+        }
+    }
+
+    @FXML
+    void UpdateOnAction(ActionEvent event) {
+        if (isMatchQty) {
+            InventoryDTO selectedItem = tblInventory.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                try {
+                    URL url = new URL("http://localhost:8080/api/v1/inventory/" + selectedItem.getId());
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+                    // Create updated InventoryDTO object
+                    InventoryDTO updatedInventoryDTO = new InventoryDTO();
+                    updatedInventoryDTO.setItemId(cmbItems.getValue().getId());
+                    updatedInventoryDTO.setReceivedDate(datePicker.getValue());
+                    updatedInventoryDTO.setReceivedQty(txtReceived_qty.getText());
+                    updatedInventoryDTO.setApprovalStatus(cmbApproval.getValue());
+                    updatedInventoryDTO.setStatus(cmbStatus.getValue());
+
+                    // Convert updated InventoryDTO object to JSON
+                    Gson gson = new GsonBuilder()
+                            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                            .create();
+
+                    String jsonInputString = gson.toJson(updatedInventoryDTO);
+
+                    // Send JSON data
+                    try (OutputStream os = conn.getOutputStream()) {
+                        byte[] input = jsonInputString.getBytes("utf-8");
+                        os.write(input, 0, input.length);
+                    }
+
+                    // Get response code
+                    int responseCode = conn.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Handle successful response
+                        System.out.println("Inventory updated successfully!");
+                        showConfirmationMessage("Inventory updated successfully!");
+                        loadDataFromBackend();
+                        clearFields();
+                    } else {
+                        // Handle error response
+                        System.out.println("Error updating inventory: " + responseCode);
+                    }
+
+                    conn.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // Handle case where no item is selected
+                System.out.println("Please select an inventory item to update.");
+            }
+        } else {
+            // Display an error message or handle the case where conditions are not met
+            showErrorAlert("Please ensure all fields are valid before updating.");
         }
     }
 
@@ -182,10 +182,12 @@ public class InventoryController {
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
                     System.out.println("Inventory item deleted successfully!");
+                   showConfirmationMessage("Inventory item deleted successfully!");
                     loadDataFromBackend();
                 } else {
                     // Handle error response
                     System.out.println("Error deleting inventory item: " + responseCode);
+                    showErrorAlert("Error deleting inventory item: " + responseCode);
                 }
 
                 conn.disconnect();
@@ -195,6 +197,7 @@ public class InventoryController {
         } else {
             // Handle case where no item is selected
             System.out.println("Please select an inventory item to delete.");
+            showErrorAlert("Please select an inventory item to delete.");
         }
     }
 
@@ -305,7 +308,6 @@ public class InventoryController {
         datePicker.setValue(null);
     }
 
-    boolean isMatchQty=false;
     public void txtReceived_qtyOnAction(KeyEvent keyEvent) {
         if (Service.receivedQty(txtReceived_qty.getText())) {
             txtReceived_qty.setStyle("-fx-border-color: green");
@@ -314,5 +316,22 @@ public class InventoryController {
             txtReceived_qty.setStyle("-fx-border-color: red");
             isMatchQty = false;
         }
+    }
+
+    private void showConfirmationMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
+    private void showErrorAlert(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(errorMessage);
+        alert.showAndWait();
     }
 }
