@@ -48,8 +48,16 @@ public class Service {
         return matcher.matches();
     }
 
+    /*
+    Password should be between 4 and 32 characters long.
+    It must contain at least one letter and one digit.*/
+
+
+//    Abcd1234
+//    SecurePwd789
+//    Password123
     public static boolean isValidPassword(String userName) {
-        Pattern pattern = Pattern.compile("[a-zA-Z0-9]{3,10}");
+        Pattern pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,32}$");
         Matcher matcher = pattern.matcher(userName);
         return matcher.matches();
     }

@@ -27,7 +27,7 @@
                         <Font name="Berlin Sans FB" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUserName" layoutX="179.0" layoutY="146.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
+                  <TextField fx:id="txtUserName" layoutX="179.0" layoutY="146.0" onKeyReleased="#txtUserNameOnAction" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
                   <Label layoutX="55.0" layoutY="211.0" text="Password   :">
                      <font>
                         <Font name="Berlin Sans FB" size="14.0" />
@@ -38,7 +38,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <PasswordField fx:id="txtPassword" layoutX="179.0" layoutY="208.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
+                  <PasswordField fx:id="txtPassword" layoutX="179.0" layoutY="208.0" onKeyReleased="#txtPasswordOnAction" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
                   <Label layoutX="109.0" layoutY="385.0" text="Not an user ?">
                      <font>
                         <Font name="System Bold" size="13.0" />

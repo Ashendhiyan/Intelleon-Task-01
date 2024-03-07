@@ -4,7 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import lk.intelleon.springbootrestfulwebservices.util.Service;
 import org.springframework.stereotype.Component;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -28,7 +30,12 @@ public class LoginController {
     @FXML
     private PasswordField txtPassword;
 
-    @FXML
+    boolean isMatchUserName = false;
+    boolean isMatchPassword = false;
+
+
+
+    @FXML       //  authentication
     void LoginOnAction(ActionEvent event) {
         try {
             // Load the FXML file for the dashboard form
@@ -66,6 +73,26 @@ public class LoginController {
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void txtUserNameOnAction(KeyEvent keyEvent) {
+        if (Service.isValidName(txtUserName.getText())) {
+            txtUserName.setStyle("-fx-border-color: green");
+            isMatchUserName = true;
+        } else {
+            txtUserName.setStyle("-fx-border-color: red");
+            isMatchUserName = false;
+        }
+    }
+
+    public void txtPasswordOnAction(KeyEvent keyEvent) {
+        if (Service.isValidPassword(txtPassword.getText())) {
+            txtPassword.setStyle("-fx-border-color: green");
+            isMatchPassword = true;
+        } else {
+            txtPassword.setStyle("-fx-border-color: red");
+            isMatchPassword = false;
         }
     }
 }
