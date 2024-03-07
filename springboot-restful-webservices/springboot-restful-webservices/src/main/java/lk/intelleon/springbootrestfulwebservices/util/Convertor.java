@@ -70,4 +70,9 @@ public class Convertor {
     public List<InventoryDTO> InventoryEntityListToInventoryDTOList(List<InventoryEntity> inventoryEntityList){
         return modelMapper.map(inventoryEntityList,new TypeToken<List<InventoryDTO>>(){}.getType());
     }
+
+    //User
+    public UserEntity UserDtoToUserEntity(UserDTO userDTO) {
+        return modelMapper.map(userDTO, UserEntity.class);
+    }
 }
