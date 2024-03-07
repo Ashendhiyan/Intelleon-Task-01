@@ -4,8 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -108,6 +110,26 @@ public class DashboardController {
             // Set the Inventory form as the content of the context AnchorPane
             context.getChildren().setAll(inventoryForm);
         }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void btnLogOutOnAction(ActionEvent actionEvent) {
+        try {
+            // Load the FXML file for the login form
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            Parent loginForm = loader.load();
+
+            // Create a new scene with the login form
+            Scene loginScene = new Scene(loginForm);
+
+            // Get the stage information
+            Stage stage = (Stage) root.getScene().getWindow();
+
+            // Set the login scene on the stage
+            stage.setScene(loginScene);
+            stage.show();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

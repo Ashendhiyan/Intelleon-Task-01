@@ -11,40 +11,43 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginAnchorPain" prefHeight="601.0" prefWidth="1018.0" style="-fx-background-color: #2d3436;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.LoginController">
+<AnchorPane fx:id="signUpAnchroPane" prefHeight="601.0" prefWidth="1018.0" style="-fx-background-color: #2d3436;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.intelleon.springbootrestfulwebservices.javaFxController.SignupController">
    <children>
-      <Pane layoutX="103.0" layoutY="86.0" prefHeight="432.0" prefWidth="810.0">
+      <Pane layoutX="100.0" layoutY="83.0" prefHeight="432.0" prefWidth="810.0">
          <children>
             <Pane prefHeight="432.0" prefWidth="405.0" style="-fx-background-color: #54a0ff; -fx-background-radius: 50px 0px 0px 50px;">
                <children>
-                  <Label layoutX="119.0" layoutY="45.0" text="Welcome Again !">
+                  <Label layoutX="136.0" layoutY="45.0" text="Register Form">
                      <font>
                         <Font name="Bell MT Bold" size="21.0" />
                      </font>
                   </Label>
-                  <Label layoutX="55.0" layoutY="148.0" text="User Name :">
+                  <Label layoutX="55.0" layoutY="147.0" text="User Name :">
                      <font>
                         <Font name="Berlin Sans FB" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtUserName" layoutX="179.0" layoutY="146.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
-                  <Label layoutX="55.0" layoutY="211.0" text="Password   :">
+                  <TextField fx:id="txtUserName" layoutX="179.0" layoutY="145.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
+                  <Label layoutX="55.0" layoutY="252.0" text="Password   :">
                      <font>
                         <Font name="Berlin Sans FB" size="14.0" />
                      </font>
                   </Label>
-                  <Button layoutX="143.0" layoutY="306.0" mnemonicParsing="false" onAction="#LoginOnAction" prefHeight="33.0" prefWidth="119.0" style="-fx-background-radius: 50px 50px 50px 50px; -fx-background-color: #B53471;" text="Log in" textFill="WHITE">
+                  <Button layoutX="143.0" layoutY="324.0" mnemonicParsing="false" onAction="#signUpOnAction" prefHeight="33.0" prefWidth="119.0" style="-fx-background-radius: 50px 50px 50px 50px; -fx-background-color: #B53471;" text="Sign up" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <PasswordField fx:id="txtPassword" layoutX="179.0" layoutY="208.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
-                  <Label layoutX="109.0" layoutY="385.0" text="Not an user ?">
+                  <PasswordField fx:id="txtPassword" layoutX="179.0" layoutY="249.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
+                  <Label layoutX="99.0" layoutY="386.0" text="Already registerd">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <Button layoutX="198.0" layoutY="381.0" mnemonicParsing="false" onAction="#btnSignUp" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: transparent;" text="Sign up!" textFill="#000bff" underline="true">
+                  <Button layoutX="203.0" layoutY="381.0" mnemonicParsing="false" onAction="#btnLogin" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: transparent;" text="Log in" textFill="#000bff" underline="true">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="14.0" />
                      </font>
@@ -52,6 +55,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Label layoutX="55.0" layoutY="199.0" text="Email">
+                     <font>
+                        <Font name="Berlin Sans FB" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtEmail" layoutX="179.0" layoutY="197.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: white; -fx-background-radius: 50px 50px 50px 50px;" />
                </children>
             </Pane>
             <Pane layoutX="405.0" prefHeight="432.0" prefWidth="405.0" style="-fx-background-color: white; -fx-background-radius: 0px 50px 50px 0px;">

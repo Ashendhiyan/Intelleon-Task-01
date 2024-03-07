@@ -48,4 +48,24 @@ public class LoginController {
             throw new RuntimeException(e);
         }
     }
+
+    public void btnSignUp(ActionEvent actionEvent) {
+        try {
+            // Load the FXML file for the signup form
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/signup.fxml"));
+            Parent signupForm = loader.load();
+
+            // Create a new scene with the signup form
+            Scene signupScene = new Scene(signupForm);
+
+            // Get the stage information
+            Stage stage = (Stage) loginAnchorPain.getScene().getWindow();
+
+            // Set the signup scene on the stage
+            stage.setScene(signupScene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
