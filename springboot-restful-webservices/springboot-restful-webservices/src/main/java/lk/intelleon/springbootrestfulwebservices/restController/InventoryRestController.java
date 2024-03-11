@@ -29,6 +29,7 @@ public class InventoryRestController {
         InventoryEntity inventoryEntity = new InventoryEntity();
         inventoryEntity.setItem(itemEntity);
         inventoryEntity.setReceivedDate(inventoryDTO.getReceivedDate());
+        inventoryEntity.setExpireDate(inventoryDTO.getExpireDate());
         inventoryEntity.setReceivedQty(inventoryDTO.getReceivedQty());
         inventoryEntity.setApprovalStatus(inventoryDTO.getApprovalStatus());
         inventoryEntity.setStatus(inventoryDTO.getStatus());

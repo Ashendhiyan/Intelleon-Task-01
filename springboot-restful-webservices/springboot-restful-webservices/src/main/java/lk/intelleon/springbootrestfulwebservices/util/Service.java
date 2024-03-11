@@ -95,7 +95,7 @@ public class Service {
         return matcher.matches();
     }
 
-    //(U-001 OR u-001)
+    //(S-001 OR s-001)
     public static boolean isValidSupplierCode(String SupplierCode) {
         Pattern pattern = Pattern.compile("^[Ss]-[0-9]{3}");
         Matcher matcher = pattern.matcher(SupplierCode);

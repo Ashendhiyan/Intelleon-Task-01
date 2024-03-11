@@ -27,6 +27,8 @@ import java.util.Arrays;
 @Component
 public class InventoryController {
 
+    public TableColumn<InventoryDTO, String> colExpDate;
+    public DatePicker expDatePicker;
     boolean isMatchQty = false;
     private ObservableList<InventoryDTO> inventoryList = FXCollections.observableArrayList();
     @FXML
@@ -68,6 +70,7 @@ public class InventoryController {
                 InventoryDTO inventoryDTO = new InventoryDTO();
                 inventoryDTO.setItemId(cmbItems.getValue().getId());
                 inventoryDTO.setReceivedDate(datePicker.getValue());
+                inventoryDTO.setExpireDate(expDatePicker.getValue());
                 inventoryDTO.setReceivedQty(txtReceived_qty.getText());
                 inventoryDTO.setApprovalStatus(cmbApproval.getValue());
                 inventoryDTO.setStatus(cmbStatus.getValue());
@@ -124,6 +127,7 @@ public class InventoryController {
                     InventoryDTO updatedInventoryDTO = new InventoryDTO();
                     updatedInventoryDTO.setItemId(cmbItems.getValue().getId());
                     updatedInventoryDTO.setReceivedDate(datePicker.getValue());
+                    updatedInventoryDTO.setExpireDate(expDatePicker.getValue());
                     updatedInventoryDTO.setReceivedQty(txtReceived_qty.getText());
                     updatedInventoryDTO.setApprovalStatus(cmbApproval.getValue());
                     updatedInventoryDTO.setStatus(cmbStatus.getValue());
@@ -212,6 +216,7 @@ public class InventoryController {
                 cmbApproval.setValue(selectedItem.getApprovalStatus());
                 // Set the date picker value
                 datePicker.setValue(selectedItem.getReceivedDate());
+                expDatePicker.setValue(selectedItem.getExpireDate());
                 // Select the corresponding item in the ComboBox
                 for (ItemDTO item : cmbItems.getItems()) {
                     if (item.getId().equals(selectedItem.getItemId())) {
@@ -237,6 +242,7 @@ public class InventoryController {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colItem.setCellValueFactory(new PropertyValueFactory<>("itemId"));
         collDate.setCellValueFactory(new PropertyValueFactory<>("receivedDate"));
+        colExpDate.setCellValueFactory(new PropertyValueFactory<>("expireDate"));
         colQty.setCellValueFactory(new PropertyValueFactory<>("receivedQty"));
         colApproval.setCellValueFactory(new PropertyValueFactory<>("approvalStatus"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -306,6 +312,7 @@ public class InventoryController {
         cmbItems.getSelectionModel().clearSelection();
         cmbApproval.getSelectionModel().clearSelection();
         datePicker.setValue(null);
+        expDatePicker.setValue(null);
     }
 
     public void txtReceived_qtyOnAction(KeyEvent keyEvent) {

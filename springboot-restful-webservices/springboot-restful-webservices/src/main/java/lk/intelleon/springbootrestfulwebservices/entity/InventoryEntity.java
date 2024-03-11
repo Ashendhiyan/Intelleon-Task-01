@@ -20,6 +20,7 @@ public class InventoryEntity {
     @JoinColumn(name = "item_id")
     private ItemEntity item;
     private LocalDate receivedDate;
+    private LocalDate expireDate;
     private String receivedQty;
     private String approvalStatus;
     private String status;

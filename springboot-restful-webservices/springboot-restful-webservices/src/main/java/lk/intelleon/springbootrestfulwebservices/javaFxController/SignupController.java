@@ -1,12 +1,15 @@
 package lk.intelleon.springbootrestfulwebservices.javaFxController;
 
 import com.google.gson.Gson;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -23,6 +26,8 @@ import java.net.URL;
 
 @Component
 public class SignupController {
+    @FXML
+    public ComboBox<String> cmbStatus;
     boolean isMatchUserName = false;
     boolean isMatchEmail = false;
     boolean isMatchPassword = false;
@@ -34,6 +39,12 @@ public class SignupController {
     private PasswordField txtPassword;
     @FXML
     private TextField txtEmail;
+
+    public void initialize(){
+        // Initialize the ComboBox with"Admin" and "User") values
+        ObservableList<String> statusOptions = FXCollections.observableArrayList("Admin", "User");
+        cmbStatus.setItems(statusOptions);
+    }
 
     @FXML
     void btnLogin(ActionEvent event) {
@@ -68,9 +79,10 @@ public class SignupController {
 
                 // Create SupplierDTO object
                 UserDTO userDTO = new UserDTO();
-                userDTO.setUserName(txtUserName.getText());
+                userDTO.setUsername(txtUserName.getText());
                 userDTO.setEmail(txtEmail.getText());
                 userDTO.setPassword(txtPassword.getText());
+                userDTO.setStatus(cmbStatus.getValue());
                 //
 
                 // Convert SupplierDTO object to JSON
@@ -157,4 +169,5 @@ public class SignupController {
             isMatchEmail = false;
         }
     }
+
 }

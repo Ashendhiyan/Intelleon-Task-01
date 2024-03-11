@@ -38,7 +38,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtCode" layoutX="210.0" layoutY="97.0" onKeyReleased="#txtCodeOnAction" prefHeight="25.0" prefWidth="182.0" stylesheets="@style/style.css">
+      <TextField fx:id="txtCode" layoutX="210.0" layoutY="97.0" onKeyReleased="#txtCodeOnAction" prefHeight="25.0" prefWidth="182.0" promptText="S-001 OR s-001" stylesheets="@style/style.css">
          <styleClass>
             <String fx:value="btn_save" />
             <String fx:value="txtCode" />

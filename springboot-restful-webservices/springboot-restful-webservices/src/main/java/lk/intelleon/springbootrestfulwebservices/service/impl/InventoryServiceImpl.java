@@ -31,6 +31,7 @@ public class InventoryServiceImpl implements InventoryService {
         InventoryEntity inventoryEntity = repository.findById(inventoryDTO.getId()).get();
         // Update the attributes of the InventoryEntity using InventoryDTO
         inventoryEntity.setReceivedDate(inventoryDTO.getReceivedDate());
+        inventoryEntity.setExpireDate(inventoryDTO.getExpireDate());
         inventoryEntity.setReceivedQty(inventoryDTO.getReceivedQty());
         inventoryEntity.setApprovalStatus(inventoryDTO.getApprovalStatus());
         inventoryEntity.setStatus(inventoryDTO.getStatus());

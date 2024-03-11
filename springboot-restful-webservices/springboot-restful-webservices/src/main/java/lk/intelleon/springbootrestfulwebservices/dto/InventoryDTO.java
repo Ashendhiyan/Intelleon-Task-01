@@ -13,6 +13,7 @@ public class InventoryDTO {
     private Long id;
     private Long itemId;
     private LocalDate receivedDate;
+    private LocalDate expireDate;
     private String receivedQty;
     private String approvalStatus;
     private String status;

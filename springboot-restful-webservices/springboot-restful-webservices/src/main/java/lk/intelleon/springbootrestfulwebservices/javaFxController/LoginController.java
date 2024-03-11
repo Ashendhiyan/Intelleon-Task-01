@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -23,6 +24,7 @@ import java.net.URL;
 
 @Component
 public class LoginController {
+    public ComboBox<String> cmbStatus;
     boolean isMatchUserName = false;
     boolean isMatchPassword = false;
     @FXML
@@ -47,7 +49,8 @@ public class LoginController {
                 LoginDTO loginDTO = new LoginDTO();
                 loginDTO.setUserName(txtUserName.getText());
                 loginDTO.setPassword(txtPassword.getText());
-                //
+//                loginDTO.setStatus(cmbStatus.getValue());
+
 
                 // Convert SupplierDTO object to JSON
                 Gson gson = new Gson();
