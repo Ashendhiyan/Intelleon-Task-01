@@ -24,6 +24,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import static lk.intelleon.springbootrestfulwebservices.javaFxController.LoginController.authToken;
+
 @Component
 public class InventoryController {
 
@@ -65,6 +67,8 @@ public class InventoryController {
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
+                // Set authToken as a header
+                conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                 // Create InventoryDTO object
                 InventoryDTO inventoryDTO = new InventoryDTO();
@@ -122,6 +126,8 @@ public class InventoryController {
                     conn.setRequestMethod("PUT");
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
+                    // Set authToken as a header
+                    conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                     // Create updated InventoryDTO object
                     InventoryDTO updatedInventoryDTO = new InventoryDTO();
@@ -180,13 +186,15 @@ public class InventoryController {
                 URL url = new URL("http://localhost:8080/api/v1/inventory/" + selectedItem.getId());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("DELETE");
+                // Set authToken as a header
+                conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                 // Get response code
                 int responseCode = conn.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     // Handle successful response
                     System.out.println("Inventory item deleted successfully!");
-                   showConfirmationMessage("Inventory item deleted successfully!");
+                    showConfirmationMessage("Inventory item deleted successfully!");
                     loadDataFromBackend();
                 } else {
                     // Handle error response
@@ -259,6 +267,8 @@ public class InventoryController {
             URL url = new URL("http://localhost:8080/api/v1/item");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            // Set authToken as a header
+            conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -283,6 +293,8 @@ public class InventoryController {
             URL url = new URL("http://localhost:8080/api/v1/inventory");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            // Set authToken as a header
+            conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
