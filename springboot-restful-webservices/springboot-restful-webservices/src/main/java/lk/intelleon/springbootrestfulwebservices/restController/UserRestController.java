@@ -21,7 +21,7 @@ public class UserRestController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody UserDTO loginDTO) {
+    public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody LoginDTO loginDTO) {
          AuthenticationResponse response = userService.authenticate(loginDTO);
         return ResponseEntity.ok(response);
     }

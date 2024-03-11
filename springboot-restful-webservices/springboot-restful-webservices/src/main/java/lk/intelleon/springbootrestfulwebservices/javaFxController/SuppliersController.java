@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.intelleon.springbootrestfulwebservices.dto.SupplierDTO;
 import lk.intelleon.springbootrestfulwebservices.util.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,6 +21,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+
+import static lk.intelleon.springbootrestfulwebservices.javaFxController.LoginController.authToken;
 
 @Component
 public class SuppliersController {
@@ -56,6 +59,7 @@ public class SuppliersController {
     @FXML
     private TableColumn<SupplierDTO, String> colStatus;
 
+
     public void initialize() {
         // Initialize the ComboBox with "Active" and "Inactive" values
         ObservableList<String> statusOptions = FXCollections.observableArrayList("Active", "Inactive");
@@ -82,6 +86,8 @@ public class SuppliersController {
             URL url = new URL("http://localhost:8080/api/v1/suppliers");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            // Set authToken as a header
+            conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
             // Get response code
             int responseCode = conn.getResponseCode();
@@ -124,13 +130,15 @@ public class SuppliersController {
 
     @FXML
     void SaveOnAction(ActionEvent event) {
-        if(isMatchSupplierCode && isMatchSupplierName  && isMatchSupplierAddress) {
+        if (isMatchSupplierCode && isMatchSupplierName && isMatchSupplierAddress) {
             try {
                 URL url = new URL("http://localhost:8080/api/v1/suppliers");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
+                // Set authToken as a header
+                conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                 // Create SupplierDTO object
                 SupplierDTO supplierDTO = new SupplierDTO();
@@ -168,7 +176,7 @@ public class SuppliersController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             // Display an error message or handle the case where conditions are not met
             showErrorAlert("Please ensure all fields are valid before saving.");
         }
@@ -176,55 +184,57 @@ public class SuppliersController {
 
     @FXML
     void UpdateOnAction(ActionEvent event) {
-        if(isMatchSupplierCode && isMatchSupplierName  && isMatchSupplierAddress) {
-        SupplierDTO selectedSupplier = tblSuppliers.getSelectionModel().getSelectedItem();
-        if (selectedSupplier != null) {
-            try {
-                URL url = new URL("http://localhost:8080/api/v1/suppliers/" + selectedSupplier.getId());
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("PUT");
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setDoOutput(true);
+        if (isMatchSupplierCode && isMatchSupplierName && isMatchSupplierAddress) {
+            SupplierDTO selectedSupplier = tblSuppliers.getSelectionModel().getSelectedItem();
+            if (selectedSupplier != null) {
+                try {
+                    URL url = new URL("http://localhost:8080/api/v1/suppliers/" + selectedSupplier.getId());
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("PUT");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+                    // Set authToken as a header
+                    conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
-                // Create SupplierDTO object with updated details
-                selectedSupplier.setSupplierCode(txtCode.getText());
-                selectedSupplier.setName(txtName.getText());
-                selectedSupplier.setAddress(txtAddress.getText());
-                selectedSupplier.setStatus(cmbStatus.getValue());
+                    // Create SupplierDTO object with updated details
+                    selectedSupplier.setSupplierCode(txtCode.getText());
+                    selectedSupplier.setName(txtName.getText());
+                    selectedSupplier.setAddress(txtAddress.getText());
+                    selectedSupplier.setStatus(cmbStatus.getValue());
 
-                // Convert SupplierDTO object to JSON
-                Gson gson = new Gson();
-                String jsonInputString = gson.toJson(selectedSupplier);
+                    // Convert SupplierDTO object to JSON
+                    Gson gson = new Gson();
+                    String jsonInputString = gson.toJson(selectedSupplier);
 
-                // Send JSON data
-                try (OutputStream os = conn.getOutputStream()) {
-                    byte[] input = jsonInputString.getBytes("utf-8");
-                    os.write(input, 0, input.length);
+                    // Send JSON data
+                    try (OutputStream os = conn.getOutputStream()) {
+                        byte[] input = jsonInputString.getBytes("utf-8");
+                        os.write(input, 0, input.length);
+                    }
+
+                    // Get response code
+                    int responseCode = conn.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        // Handle successful response
+                        System.out.println("Supplier updated successfully!");
+                        showConfirmationMessage("Supplier updated successfully!");
+                        // Refresh table data after update
+                        loadDataFromBackend();
+                        clearTextFields();
+                    } else {
+                        // Handle error response
+                        System.out.println("Error updating supplier: " + responseCode);
+                        showErrorAlert("Error updating supplier: " + responseCode);
+                    }
+
+                    conn.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-                // Get response code
-                int responseCode = conn.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    // Handle successful response
-                    System.out.println("Supplier updated successfully!");
-                    showConfirmationMessage("Supplier updated successfully!");
-                    // Refresh table data after update
-                    loadDataFromBackend();
-                    clearTextFields();
-                } else {
-                    // Handle error response
-                    System.out.println("Error updating supplier: " + responseCode);
-                   showErrorAlert("Error updating supplier: " + responseCode);
-                }
-
-                conn.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                System.out.println("Please select a supplier to update.");
             }
         } else {
-            System.out.println("Please select a supplier to update.");
-        }
-        }else {
             // Display an error message or handle the case where conditions are not met
             showErrorAlert("Please ensure all fields are valid before updating.");
         }
@@ -238,6 +248,8 @@ public class SuppliersController {
                 URL url = new URL("http://localhost:8080/api/v1/suppliers/" + selectedSupplier.getId());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("DELETE");
+                // Set authToken as a header
+                conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                 // Get response code
                 int responseCode = conn.getResponseCode();
@@ -298,7 +310,6 @@ public class SuppliersController {
         alert.showAndWait();
     }
 
-
     private void showErrorAlert(String errorMessage) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -306,4 +317,5 @@ public class SuppliersController {
         alert.setContentText(errorMessage);
         alert.showAndWait();
     }
+
 }

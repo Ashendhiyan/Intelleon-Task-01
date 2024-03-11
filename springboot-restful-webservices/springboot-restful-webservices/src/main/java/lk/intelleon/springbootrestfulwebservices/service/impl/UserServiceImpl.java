@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public AuthenticationResponse authenticate(UserDTO user) {
+    public AuthenticationResponse authenticate(LoginDTO user) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),

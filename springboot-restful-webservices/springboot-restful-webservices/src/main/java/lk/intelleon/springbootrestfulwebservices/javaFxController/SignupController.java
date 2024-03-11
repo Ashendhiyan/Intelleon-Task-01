@@ -71,7 +71,7 @@ public class SignupController {
     void signUpOnAction(ActionEvent event) {
         if (isMatchUserName && isMatchEmail && isMatchPassword) {
             try {
-                URL url = new URL("http://localhost:8080/api/v1/user/save");
+                URL url = new URL("http://localhost:8080/api/v1/user/register");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");

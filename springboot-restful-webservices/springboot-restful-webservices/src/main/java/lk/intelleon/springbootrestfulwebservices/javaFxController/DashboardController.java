@@ -29,19 +29,26 @@ public class DashboardController {
     public Button Inventory;
     public Button Items;
 
+    private String authToken;
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+
     @FXML
     public void btnSuppliersOnAction(ActionEvent actionEvent) {
         try {
-            // Load the FXML file for the supplier form
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/suppliers.fxml"));
-            Parent supplierForm = loader.load();
+                // Load the FXML file for the supplier form
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/suppliers.fxml"));
+                Parent supplierForm = loader.load();
 
-            // Access the controller for the supplier form
-            SuppliersController suppliersController = loader.getController();
+                // Access the controller for the supplier form
+                SuppliersController suppliersController = loader.getController();
 
-            // Set the supplier form as the content of the context AnchorPane
-            context.getChildren().setAll(supplierForm);
-        }catch (IOException e) {
+                // Set the supplier form as the content of the context AnchorPane
+                context.getChildren().setAll(supplierForm);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -58,7 +65,7 @@ public class DashboardController {
 
             // Set the unit form as the content of the context AnchorPane
             context.getChildren().setAll(unitForm);
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -75,7 +82,7 @@ public class DashboardController {
 
             // Set the category form as the content of the context AnchorPane
             context.getChildren().setAll(categoryForm);
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -92,7 +99,7 @@ public class DashboardController {
 
             // Set the item form as the content of the context AnchorPane
             context.getChildren().setAll(itemForm);
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -109,7 +116,7 @@ public class DashboardController {
 
             // Set the Inventory form as the content of the context AnchorPane
             context.getChildren().setAll(inventoryForm);
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
