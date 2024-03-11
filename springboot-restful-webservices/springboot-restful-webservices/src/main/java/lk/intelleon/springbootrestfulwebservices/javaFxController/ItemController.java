@@ -23,6 +23,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 
+import static lk.intelleon.springbootrestfulwebservices.javaFxController.LoginController.authToken;
+
 @Component
 public class ItemController {
 
@@ -116,7 +118,8 @@ public class ItemController {
             URL url = new URL("http://localhost:8080/api/v1/category");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-
+            // Set authToken as a header
+            conn.setRequestProperty("Authorization", "Bearer " + authToken);
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 try (InputStreamReader reader = new InputStreamReader(conn.getInputStream())) {
@@ -143,6 +146,8 @@ public class ItemController {
             URL url = new URL("http://localhost:8080/api/v1/unit");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            // Set authToken as a header
+            conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -171,6 +176,8 @@ public class ItemController {
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
+                // Set authToken as a header
+                conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                 // Create ItemDTO object
                 ItemDTO itemDTO = new ItemDTO();
@@ -227,6 +234,8 @@ public class ItemController {
                     conn.setRequestMethod("PUT");
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
+                    // Set authToken as a header
+                    conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                     // Create updated ItemDTO object
                     ItemDTO updatedItemDTO = new ItemDTO();
@@ -284,6 +293,8 @@ public class ItemController {
                 URL url = new URL("http://localhost:8080/api/v1/item/" + selectedItem.getId());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("DELETE");
+                // Set authToken as a header
+                conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                 // Get response code
                 int responseCode = conn.getResponseCode();
@@ -340,6 +351,8 @@ public class ItemController {
             URL url = new URL("http://localhost:8080/api/v1/item");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            // Set authToken as a header
+            conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
