@@ -21,6 +21,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 
+import static lk.intelleon.springbootrestfulwebservices.javaFxController.LoginController.authToken;
+
 @Component
 public class CategoryController {
     @FXML
@@ -76,7 +78,8 @@ public class CategoryController {
             URL url = new URL("http://localhost:8080/api/v1/category");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-
+            // Set authToken as a header
+            conn.setRequestProperty("Authorization", "Bearer " + authToken);
             // Get response code
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -122,6 +125,8 @@ public class CategoryController {
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
+                // Set authToken as a header
+                conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                 // Create SupplierDTO object
                 CategoryDTO categoryDTO = new CategoryDTO();
@@ -173,6 +178,8 @@ public class CategoryController {
                     conn.setRequestMethod("PUT");
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
+                    // Set authToken as a header
+                    conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                     // Create SupplierDTO object with updated details
                     selectedCategory.setCode(txtCode.getText());
@@ -194,7 +201,7 @@ public class CategoryController {
                     if (responseCode == HttpURLConnection.HTTP_OK) {
                         // Handle successful response
                         System.out.println("Category updated successfully!");
-                       showConfirmationMessage("Category updated successfully!");
+                        showConfirmationMessage("Category updated successfully!");
                         // Refresh table data after update
                         loadDataFromBackend();
                         clearTextFields();
@@ -223,6 +230,8 @@ public class CategoryController {
                 URL url = new URL("http://localhost:8080/api/v1/category/" + selectedCategory.getId());
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("DELETE");
+                // Set authToken as a header
+                conn.setRequestProperty("Authorization", "Bearer " + authToken);
 
                 // Get response code
                 int responseCode = conn.getResponseCode();
