@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLOutput;
+import java.util.List;
 
 @Transactional
 @Service
@@ -73,5 +74,11 @@ public class UserServiceImpl implements UserService {
 
         return new AuthenticationResponse(jwt, "User login was successful");
 
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+        List<UserEntity> all = repository.findAll();
+        return convertor.UserEntityListToUserDTOList(all);
     }
 }

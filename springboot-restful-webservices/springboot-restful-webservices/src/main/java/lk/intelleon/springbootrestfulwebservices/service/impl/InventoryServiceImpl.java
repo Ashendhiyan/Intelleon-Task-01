@@ -2,9 +2,11 @@ package lk.intelleon.springbootrestfulwebservices.service.impl;
 
 import lk.intelleon.springbootrestfulwebservices.dto.InventoryDTO;
 import lk.intelleon.springbootrestfulwebservices.entity.InventoryEntity;
+import lk.intelleon.springbootrestfulwebservices.projection.InventoryProjection;
 import lk.intelleon.springbootrestfulwebservices.repo.InventoryRepository;
 import lk.intelleon.springbootrestfulwebservices.service.InventoryService;
 import lk.intelleon.springbootrestfulwebservices.util.Convertor;
+import lk.intelleon.springbootrestfulwebservices.util.MailSenderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,4 +51,5 @@ public class InventoryServiceImpl implements InventoryService {
         List<InventoryEntity> all = repository.findAll();
         return convertor.InventoryEntityListToInventoryDTOList(all);
     }
+
 }

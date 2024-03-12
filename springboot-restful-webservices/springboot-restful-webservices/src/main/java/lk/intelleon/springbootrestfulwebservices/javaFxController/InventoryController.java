@@ -2,6 +2,7 @@ package lk.intelleon.springbootrestfulwebservices.javaFxController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,25 +13,33 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.intelleon.springbootrestfulwebservices.dto.InventoryDTO;
 import lk.intelleon.springbootrestfulwebservices.dto.ItemDTO;
+import lk.intelleon.springbootrestfulwebservices.entity.InventoryEntity;
 import lk.intelleon.springbootrestfulwebservices.util.LocalDateAdapter;
 import lk.intelleon.springbootrestfulwebservices.util.Service;
 import org.springframework.stereotype.Component;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.http.HttpResponse;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static lk.intelleon.springbootrestfulwebservices.javaFxController.LoginController.authToken;
+import static lk.intelleon.springbootrestfulwebservices.util.MailSenderUtil.sendEmail;
 
 @Component
 public class InventoryController {
 
     public TableColumn<InventoryDTO, String> colExpDate;
     public DatePicker expDatePicker;
+    public Label expLable;
     boolean isMatchQty = false;
     private ObservableList<InventoryDTO> inventoryList = FXCollections.observableArrayList();
     @FXML
@@ -99,6 +108,7 @@ public class InventoryController {
                     System.out.println("Inventory saved successfully!");
                     showConfirmationMessage("Inventory saved successfully!");
                     loadDataFromBackend(); // Refresh data
+                    loadDataAndSetToTable();
                     clearFields(); // Clear input fields
                 } else {
                     // Handle error response
@@ -157,7 +167,8 @@ public class InventoryController {
                         // Handle successful response
                         System.out.println("Inventory updated successfully!");
                         showConfirmationMessage("Inventory updated successfully!");
-                        loadDataFromBackend();
+                        loadDataFromBackend(); // Refresh data
+                        loadDataAndSetToTable();
                         clearFields();
                     } else {
                         // Handle error response
@@ -195,7 +206,7 @@ public class InventoryController {
                     // Handle successful response
                     System.out.println("Inventory item deleted successfully!");
                     showConfirmationMessage("Inventory item deleted successfully!");
-                    loadDataFromBackend();
+                    loadDataFromBackend(); // Refresh data
                 } else {
                     // Handle error response
                     System.out.println("Error deleting inventory item: " + responseCode);
@@ -239,6 +250,7 @@ public class InventoryController {
     public void initialize() {
         loadItemsFromBackend();
         loadDataFromBackend();
+        delayLoadDataAndSetToTable(); // Call the delayed method
 
         // Initialize ComboBoxes
         ObservableList<String> approvalStatus = FXCollections.observableArrayList("Pending", "Approved");
@@ -257,6 +269,17 @@ public class InventoryController {
 
         // Set data to table
         tblInventory.setItems(inventoryList);
+    }
+
+    private void delayLoadDataAndSetToTable() {
+        // Create a PauseTransition with a duration of 5 seconds
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+
+        // Set the action to be performed after the delay
+        delay.setOnFinished(event -> loadDataAndSetToTable());
+
+        // Start the delay
+        delay.play();
     }
 
     private void loadItemsFromBackend() {
@@ -288,7 +311,10 @@ public class InventoryController {
         }
     }
 
-    private void loadDataFromBackend() {
+
+    private List<InventoryDTO> loadDataFromBackend() {
+        List<InventoryDTO> itemList = new ArrayList<>();
+
         try {
             URL url = new URL("http://localhost:8080/api/v1/inventory");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -306,6 +332,7 @@ public class InventoryController {
                     InventoryDTO[] inventoryArray = gson.fromJson(reader, InventoryDTO[].class);
                     inventoryList.clear();
                     inventoryList.addAll(Arrays.asList(inventoryArray));
+                    itemList.addAll(Arrays.asList(inventoryArray));
                 }
             } else {
                 System.out.println("Error fetching inventory data: " + responseCode);
@@ -315,8 +342,32 @@ public class InventoryController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return itemList;
     }
 
+
+    private void loadDataAndSetToTable() {
+        List<InventoryDTO> itemList = loadDataFromBackend();
+
+        for (InventoryDTO item : itemList) {
+            LocalDate currentDate = LocalDate.now();
+            LocalDate expireDate = item.getExpireDate();
+
+            if (expireDate != null && expireDate.isBefore(currentDate.plusDays(10))) {
+                showAlert(null, "Warning", "Inventory id " + item.getId() + " will expire in " + item.getExpireDate());
+                sendEmail("dyan13516@gmail.com", "expire date", String.valueOf(item));
+                continue;
+            }
+        }
+        loadDataFromBackend();
+//        updateTableView(itemList);
+    }
+
+    //    update table
+    private void updateTableView(List<InventoryDTO> itemList) {
+        ObservableList<InventoryDTO> observableList = FXCollections.observableArrayList(itemList);
+        tblInventory.setItems(observableList);
+    }
     private void clearFields() {
         // Implement method to clear input fields
         txtReceived_qty.clear();
@@ -352,5 +403,14 @@ public class InventoryController {
         alert.setHeaderText(null);
         alert.setContentText(errorMessage);
         alert.showAndWait();
+    }
+    private void showAlert(HttpResponse<String> response, String title, String contentText) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle(title);
+            alert.setHeaderText(title);
+            alert.setContentText(contentText);
+            alert.showAndWait();
+        });
     }
 }

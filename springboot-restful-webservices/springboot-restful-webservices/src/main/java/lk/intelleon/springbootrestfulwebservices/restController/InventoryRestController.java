@@ -5,12 +5,15 @@ import lk.intelleon.springbootrestfulwebservices.entity.InventoryEntity;
 import lk.intelleon.springbootrestfulwebservices.entity.ItemEntity;
 import lk.intelleon.springbootrestfulwebservices.service.InventoryService;
 import lk.intelleon.springbootrestfulwebservices.service.ItemService;
+import lk.intelleon.springbootrestfulwebservices.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("api/v1/inventory")
@@ -20,6 +23,9 @@ public class InventoryRestController {
 
     @Autowired
     ItemService itemService;    // Inject ItemService
+
+    @Autowired
+    UserService userService;
 
     @PostMapping
     public ResponseEntity<String> saveInventory(@RequestBody InventoryDTO inventoryDTO) {
@@ -55,4 +61,5 @@ public class InventoryRestController {
         List<InventoryDTO> inventories = inventoryService.getAllInventory();
         return new ResponseEntity<>(inventories, HttpStatus.OK);
     }
+
 }

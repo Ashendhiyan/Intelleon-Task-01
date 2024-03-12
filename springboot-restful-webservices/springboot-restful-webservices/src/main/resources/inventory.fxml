@@ -114,5 +114,6 @@
          </font>
       </Label>
       <DatePicker fx:id="expDatePicker" layoutX="228.0" layoutY="196.0" />
+      <Label fx:id="expLable" layoutX="418.0" layoutY="281.0" prefHeight="77.0" prefWidth="353.0" />
    </children>
 </AnchorPane>
